@@ -9,6 +9,7 @@ import Balance from './components/Balance';
 import Market from './components/Market';
 import Converter from './components/Converter';
 import Onboarding from './components/Onboarding';
+import Admin from './components/Admin';
 import './App.css';
 
 const manifestUrl = 'https://raw.githubusercontent.com/Fiva-protocol/contracts-2/main/manifest/manifest.json';
@@ -27,7 +28,7 @@ const AppRoutes: React.FC = () => {
   const navigate = useNavigate();
 
   const navigateToBalance = () => {
-    navigate('/balance');
+    navigate('/test-tokens');
   };
 
   return (
@@ -41,6 +42,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/market" element={<><Header /><Market /></>} />
           <Route path="/converter" element={<><Header /><Converter /></>} />
           <Route path="/" element={<Navigate to="/onboarding" />} />
+          <Route path="/admin-ui" element={<><Header /><Admin /></>} />
         </Routes>
       </div>
       <Footer />
