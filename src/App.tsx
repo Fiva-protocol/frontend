@@ -32,21 +32,26 @@ const AppRoutes: React.FC = () => {
   };
 
   return (
-    <div className="App">
-      <div className="content">
+    <>
+      
+      <div className="min-h-screen items-center mx-auto justify-center">
+      <Header />
+        <div className="container flex-grow mx-auto w-12/12 md:w-5/12">
         <Routes>
           <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
-          <Route path="/dashboard" element={<><Header /><Dashboard /></>} />
-          <Route path="/test-tokens" element={<><Header /><TestTokens /></>} />
-          <Route path="/balance" element={<><Header /><Balance /></>} />
-          <Route path="/market" element={<><Header /><Market /></>} />
-          <Route path="/converter" element={<><Header /><Converter /></>} />
+          <Route path="/dashboard" element={<><Dashboard /></>} />
+          <Route path="/test-tokens" element={<><TestTokens /></>} />
+          <Route path="/balance" element={<><Balance /></>} />
+          <Route path="/market" element={<><Market /></>} />
+          <Route path="/converter" element={<><Converter /></>} />
           <Route path="/" element={<Navigate to="/onboarding" />} />
-          <Route path="/admin-ui" element={<><Header /><Admin /></>} />
+          <Route path="/admin-ui" element={<><Admin /></>} />
         </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+      {/* <Footer /> */}
+    </>
   );
 };
 

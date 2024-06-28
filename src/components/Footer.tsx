@@ -12,8 +12,8 @@ const Footer = () => {
   return (
     <footer className="footer">
       <NavLink to="/converter" activeClassName="active">
-        <img src={converterIcon} alt="Converter" />
-        <span>Converter</span>
+        <img src={converterIcon} alt="Mint" />
+        <span>Mint</span>
       </NavLink>
       <NavLink to="/market" activeClassName="active">
         <img src={marketIcon} alt="Market" />

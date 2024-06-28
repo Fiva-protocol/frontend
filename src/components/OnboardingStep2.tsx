@@ -2,12 +2,12 @@
 import React from 'react';
 import './Onboarding.css';
 import './CommonButton.css';
-import onboardingImage from '../assets/icons/onboardingImage.svg';
+import onboardingImage from '../assets/videos/onboardingThemeVideo.mp4';
 
 const OnboardingStep2 = ({ nextStep }) => {
   return (
     <div className="onboarding">
-      <img src={onboardingImage} alt="Onboarding" className="onboarding-image" />
+      <video src={onboardingImage} className="onboarding-image" autoPlay muted loop playsInline />
       <h1>Secure & Transparent</h1>
       <p>Your assets are protected with top-tier security and full transparency. Trust in the power of decentralised finance.</p>
       <div className="progress-indicator">
@@ -15,7 +15,7 @@ const OnboardingStep2 = ({ nextStep }) => {
         <span className="active"></span>
         <span></span>
       </div>
-      <button className="button next-button" onClick={nextStep}>Next</button>
+      <button className="button" onClick={nextStep}>Next</button>
     </div>
   );
 };
