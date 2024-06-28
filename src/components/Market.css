@@ -1,0 +1,123 @@
+/* src/components/Market.css */
+.market-page {
+  padding: 20px;
+}
+
+.market-content {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.tabs {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #333;
+}
+
+.tab {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #aaa;
+  font-size: 16px;
+  margin-right: 20px;
+  position: relative;
+}
+
+.tab.active {
+  color: #fff;
+}
+
+.tab.active::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+}
+
+.swap-section,
+.limit-section,
+.mint-section {
+  margin-top: 20px;
+}
+
+.swap-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.swap-button {
+  padding: 10px 20px;
+  background: #1a1a1a;
+  border: 1px solid #555;
+  border-radius: 24px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  flex: 1;
+  margin: 0 5px;
+  transition: background-color 0.3s;
+}
+
+.swap-button.active {
+  background: linear-gradient(90deg, #8e2de2, #4a00e0);
+  color: #fff;
+}
+
+.swap-button:not(.active):hover {
+  background: #333;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  background: #333;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.input-select {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.input-number {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  width: 100%;
+}
+
+.swap-icon {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.swap-icon img {
+  width: 24px;
+  height: auto;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  text-align: center;
+}

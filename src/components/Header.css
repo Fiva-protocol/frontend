@@ -1,0 +1,29 @@
+/* src/components/Header.css */
+.header {
+  background-color: #000; /* uniform black background */
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 40px;
+}
+
+.connect-wallet {
+  background: linear-gradient(90deg, #8e2de2, #4a00e0);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.connect-wallet img {
+  margin-right: 10px;
+  height: 24px;
+}

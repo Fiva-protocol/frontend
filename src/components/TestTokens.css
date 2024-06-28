@@ -1,0 +1,36 @@
+.test-tokens {
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+.test-tokens input[type="text"],
+.test-tokens input[type="number"] {
+  background-color: #000;
+  border: 1px solid #666;
+  border-radius: 5px;
+  color: #fff;
+  padding: 10px;
+  width: calc(100% - 22px);
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.test-tokens button {
+  background-color: #6c00ff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  padding: 15px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.test-tokens button:hover {
+  background-color: #5900cc;
+}

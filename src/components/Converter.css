@@ -1,0 +1,106 @@
+/* src/components/Converter.css */
+.converter-page {
+  padding: 20px;
+}
+
+.converter-content {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  background: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+}
+
+.tab.active {
+  background: linear-gradient(90deg, #8e2de2, #4a00e0);
+}
+
+.converter-section {
+  margin-top: 20px;
+}
+
+.input-group,
+.output-group {
+  margin-bottom: 20px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  background: #333;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px; /* Add margin between input rows */
+}
+
+.input-select {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.input-number {
+  background: #1a1a1a;
+  border: 1px solid #555;
+  color: #fff;
+  font-size: 16px;
+  width: 100%;
+  border-radius: 8px;
+  padding: 5px 10px;
+}
+
+.output-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  color: #fff;
+}
+
+.output-label span:first-child {
+  font-size: 16px;
+}
+
+.output-label span:last-child {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.output-label img {
+  width: 24px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.swap-icon {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.swap-icon img {
+  width: 24px;
+  height: auto;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  text-align: center;
+}

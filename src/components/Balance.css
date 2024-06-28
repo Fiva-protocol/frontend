@@ -1,0 +1,91 @@
+/* src/components/Balance.css */
+.balance {
+  background: linear-gradient(145deg, #0e0e0e, #1c1c1c);
+  padding: 20px;
+  border-radius: 20px;
+  color: white;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.balance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tsTon-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.balance-title h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.balance-title p {
+  margin: 0;
+  font-size: 14px;
+  color: #a0a0a0;
+}
+
+.balance-details {
+  background: #252525;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.balance-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.info-value {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.info-subvalue {
+  display: block;
+  font-size: 10px;
+  color: #a0a0a0;
+}
+
+.balance-subdetails {
+  background: #252525;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.balance-subdetail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.subdetail-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.subdetail-info {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.subdetail-value {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.subdetail-subvalue {
+  display: block;
+  font-size: 10px;
+  color: #a0a0a0;
+}

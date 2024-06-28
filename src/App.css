@@ -1,0 +1,31 @@
+/* src/App.css */
+.App {
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  height: 100vh;
+}
+
+.content {
+  padding-bottom: 60px; /* space for footer */
+}
+
+.header {
+  background-color: #000; /* uniform black background */
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer {
+  background-color: #000; /* uniform black background */
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

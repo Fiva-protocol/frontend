@@ -1,0 +1,38 @@
+/* src/components/Footer.css */
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #333;
+  z-index: 1000; /* Ensure footer is on top */
+  font-size: 16px; /* Increase font size */
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px; /* Increase font size */
+}
+
+.footer a img {
+  width: 32px; /* Increase icon size */
+  height: auto;
+  margin-bottom: 5px;
+}
+
+.footer a.active {
+  color: #6200ea;
+}
+
+.footer a span {
+  font-size: 14px; /* Adjust text size */
+}
