@@ -11,11 +11,7 @@ import dashboardIcon from '../assets/icons/dashboardIcon.svg';
 const Footer = () => {
   return (
     <footer className="footer">
-<<<<<<< HEAD
       <NavLink to="/converter">
-=======
-      <NavLink to="/converter" activeClassName="active">
->>>>>>> 427676e77701ed2676dfc83c0ff9716c8050056b
         <img src={converterIcon} alt="Mint" />
         <span>Mint</span>
       </NavLink>
