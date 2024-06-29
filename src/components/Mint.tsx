@@ -24,7 +24,7 @@ const Mint: FC<MintProps> = ({}) => {
                 onClick={onClick}
                 className="button"
             >
-                Mint 10 tsTON
+                Get test tokens
             </button>
         </div>
     );

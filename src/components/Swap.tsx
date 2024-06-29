@@ -1,32 +1,68 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Swap.css';
 import CommonButton from './CommonButton';
 import downArrow from '../assets/icons/downArrow.svg';
 
-const SwapPage = () => {
-  const [activeTab, setActiveTab] = useState('buy');
+const Swap = () => {
+  const [activeTab, setActiveTab] = useState('YT');
+  const [activeSubTab, setActiveSubTab] = useState('buy');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    if (location.pathname === '/swap/pt') {
+      setActiveTab('PT');
+    } else {
+      setActiveTab('YT');
+    }
+  }, [location]);
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    setActiveSubTab('buy'); // Reset sub-tab to 'buy' when switching main tabs
+    if (tab === 'PT') {
+      navigate('/swap/pt');
+    } else {
+      navigate('/swap');
+    }
+  };
 
   return (
     <div className="swap-page">
+      <div className="swap-tabs dashboard-tabs">
+        <button
+          className={`swap-button ${activeTab === 'YT' ? 'active' : ''}`}
+          onClick={() => handleTabClick('YT')}
+        >
+          YT
+        </button>
+        <button
+          className={`swap-button ${activeTab === 'PT' ? 'active' : ''}`}
+          onClick={() => handleTabClick('PT')}
+        >
+          PT
+        </button>
+      </div>
       <div className="swap-content">
         <div className="swap-section">
-            <div>
-            <h1>Swap</h1>
+          <div>
+            <h1>Swap {activeTab}</h1>
             <p>Swap your tokens here.</p>
-            <br></br>
-            </div>
-          <div className="swap-buttons">
+            <br />
+          </div>
+          <div className="swap-buttons sub-tabs">
             <button
-              className={`swap-button ${activeTab === 'buy' ? 'active' : ''}`}
-              onClick={() => setActiveTab('buy')}
+              className={`swap-button ${activeSubTab === 'buy' ? 'active' : ''}`}
+              onClick={() => setActiveSubTab('buy')}
             >
-              Buy YT
+              Buy {activeTab}
             </button>
             <button
-              className={`swap-button ${activeTab === 'sell' ? 'active' : ''}`}
-              onClick={() => setActiveTab('sell')}
+              className={`swap-button ${activeSubTab === 'sell' ? 'active' : ''}`}
+              onClick={() => setActiveSubTab('sell')}
             >
-              Sell YT
+              Sell {activeTab}
             </button>
           </div>
           <div className="input-group">
@@ -49,8 +85,8 @@ const SwapPage = () => {
         </div>
         <div className="action-button-container">
           <CommonButton
-            onClick={() => console.log(`${activeTab === 'buy' ? 'Buy' : 'Sell'} YT clicked`)}
-            text={activeTab === 'buy' ? 'Buy YT' : 'Sell YT'}
+            onClick={() => console.log(`${activeSubTab === 'buy' ? 'Buy' : 'Sell'} ${activeTab} clicked`)}
+            text={activeSubTab === 'buy' ? `Buy ${activeTab}` : `Sell ${activeTab}`}
           />
         </div>
       </div>
@@ -58,4 +94,4 @@ const SwapPage = () => {
   );
 };
 
-export default SwapPage;
+export default Swap;
