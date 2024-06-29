@@ -44,6 +44,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/test-tokens" element={<><TestTokens /></>} />
           <Route path="/pools" element={<><Pools /></>} />
           <Route path="/market" element={<><Market /></>} />
+          <Route path="/swap/pt" element={<><Swap /></>} />
           <Route path="/swap" element={<><Swap /></>} />
           <Route path="/converter" element={<><Converter /></>} />
           <Route path="/" element={<Navigate to="/onboarding" />} />

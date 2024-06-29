@@ -1,66 +1,69 @@
-// src/components/Market.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Market.css';
-import tsTonIcon from '../assets/icons/tsTonIcon.svg';
-import ptIcon from '../assets/icons/ptIcon.svg';
 import ytIcon from '../assets/icons/ytIcon.svg';
-import './CommonButton.css';
-import CommonButton from './CommonButton';
+import ptIcon from '../assets/icons/ptIcon.svg';
+import tsTonIcon from '../assets/icons/tsTonIcon.svg';
+import { useTonAddress } from '@tonconnect/ui-react';
+import Mint from './Mint';
 
 
-
-const Market = () => {
+const Market: React.FC = () => {
+  const address = useTonAddress();
   const navigate = useNavigate();
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
   return (
     <div className="market">
       <div className="market-header">
-        <img src={tsTonIcon} alt="tsTON" className="tsTon-icon" />
         <div className="market-title">
           <h2>tsTON</h2>
           <p>Tonstakers</p>
         </div>
+        <img src={tsTonIcon} alt="tsTON" className="tsTon-icon" />
       </div>
       <div className="market-details">
         <div className="market-info">
-          <div>Maturity</div>
-          <div className="info-value">27 Jun 2024</div>
-          <div className="info-subvalue">15 days</div>
+          <span>Maturity</span>
+          <span className="info-value">27 Jun 2024</span>
         </div>
         <div className="market-info">
-          <div>Liquidity</div>
-          <div className="info-value">$34,868,190.62</div>
+          <span>Liquidity</span>
+          <span className="info-value">$34,868,190.62</span>
         </div>
         <div className="market-info">
-          <div>Underlying APY</div>
-          <div className="info-value">2.448%</div>
-          <div className="info-subvalue">Price $3,552.24</div>
+          <span>Underlying APY</span>
+          <span className="info-value">2.448%<span className="info-subvalue">Price $3,552.24</span></span>
         </div>
         <div className="market-info">
-          <div>Implied APY</div>
-          <div className="info-value">18.67%</div>
+          <span>Implied APY</span>
+          <span className="info-value">18.67%</span>
         </div>
       </div>
-      <div className="market-subdetails">
+      <div className="market-subdetails" onClick={() => handleNavigation('/swap')} style={{ cursor: 'pointer' }}>
         <div className="market-subdetail">
-          <img src={ytIcon} alt="YT" className="subdetail-icon" />
+          <img src={ytIcon} alt="YT Icon" className="subdetail-icon" />
           <div className="subdetail-info">
-            <div>Long Yield APY</div>
-            <div className="subdetail-value">-100%</div>
-            <div className="subdetail-subvalue">Price $26.23</div>
+            <span className="subdetail-value">Long Yield APY</span>
+            <span className="subdetail-subvalue">Price $26.23</span>
           </div>
+          <span className="subdetail-value">-100%</span>
         </div>
+      </div>
+      <div className="market-subdetails" onClick={() => handleNavigation('/swap/pt')} style={{ cursor: 'pointer', marginTop: '10px' }}>
         <div className="market-subdetail">
-          <img src={ptIcon} alt="PT" className="subdetail-icon" />
+          <img src={ptIcon} alt="PT Icon" className="subdetail-icon" />
           <div className="subdetail-info">
-            <div>Fixed APY</div>
-            <div className="subdetail-value">18.67%</div>
-            <div className="subdetail-subvalue">Price $3,526.51</div>
+            <span className="subdetail-value">Fixed APY</span>
+            <span className="subdetail-subvalue">Price $3,526.51</span>
           </div>
+          <span className="subdetail-value">18.67%</span>
         </div>
       </div>
       <div className="action-button-container">
-        <CommonButton onClick={() => navigate('/test-tokens')} text="Get test tokens" />
+        <Mint address={address}/>
       </div>
     </div>
   );
