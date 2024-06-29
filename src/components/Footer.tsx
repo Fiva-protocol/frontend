@@ -5,29 +5,29 @@ import './Footer.css';
 import converterIcon from '../assets/icons/convertorIcon.svg';
 import marketIcon from '../assets/icons/marketIcon.svg';
 import balanceIcon from '../assets/icons/balanceIcon.svg';
-import testTokenIcon from '../assets/icons/testToken.svg';
+import poolsIcon from '../assets/icons/poolsIcon.svg';
 import dashboardIcon from '../assets/icons/dashboardIcon.svg';
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <NavLink to="/converter" activeClassName="active">
+      <NavLink to="/converter">
         <img src={converterIcon} alt="Mint" />
         <span>Mint</span>
       </NavLink>
-      <NavLink to="/market" activeClassName="active">
-        <img src={marketIcon} alt="Market" />
+      <NavLink to="/swap">
+        <img src={marketIcon} alt="Swap" />
+        <span>Swap</span>
+      </NavLink>
+      <NavLink to="/market">
+        <img src={balanceIcon} alt="Market" />
         <span>Market</span>
       </NavLink>
-      <NavLink to="/balance" activeClassName="active">
-        <img src={balanceIcon} alt="Balance" />
-        <span>Balance</span>
+      <NavLink to="/pools">
+        <img src={poolsIcon} alt="Pools" />
+        <span>Pools</span>
       </NavLink>
-      <NavLink to="/test-tokens" activeClassName="active">
-        <img src={testTokenIcon} alt="Test Tokens" />
-        <span>Test Tokens</span>
-      </NavLink>
-      <NavLink to="/dashboard" activeClassName="active">
+      <NavLink to="/dashboard">
         <img src={dashboardIcon} alt="Dashboard" />
         <span>Dashboard</span>
       </NavLink>

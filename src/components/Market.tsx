@@ -1,106 +1,66 @@
 // src/components/Market.js
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Market.css';
+import tsTonIcon from '../assets/icons/tsTonIcon.svg';
+import ptIcon from '../assets/icons/ptIcon.svg';
+import ytIcon from '../assets/icons/ytIcon.svg';
 import './CommonButton.css';
-// import tsTonIcon from '../assets/icons/tsTonIcon.svg';
-import downArrow from '../assets/icons/downArrow.svg';
+import CommonButton from './CommonButton';
+
+
 
 const Market = () => {
-  const [activeTab, setActiveTab] = useState('swap');
-  const [swapMode, setSwapMode] = useState('buy');
-
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'swap':
-        return (
-          <div className="swap-section">
-            <div className="swap-buttons">
-              <button
-                className={`swap-button ${swapMode === 'buy' ? 'active' : ''}`}
-                onClick={() => setSwapMode('buy')}
-              >
-                Buy YT
-              </button>
-              <button
-                className={`swap-button ${swapMode === 'sell' ? 'active' : ''}`}
-                onClick={() => setSwapMode('sell')}
-              >
-                Sell YT
-              </button>
-            </div>
-            <div className="swap-inputs">
-              <div className="input-group">
-                <label>Input</label>
-                <div className="input-row">
-                  <select className="input-select">
-                    <option value="tsTon">tsTON</option>
-                    {/* Add other options here */}
-                  </select>
-                  <input type="number" placeholder="0" className="input-number" />
-                </div>
-              </div>
-              <div className="swap-icon">
-                <img src={downArrow} alt="Swap" />
-              </div>
-              <div className="input-group">
-                <label>Output</label>
-                <div className="input-row">
-                  <select className="input-select">
-                    <option value="tsTon">tsTON</option>
-                    {/* Add other options here */}
-                  </select>
-                  <input type="number" placeholder="0" className="input-number" />
-                </div>
-              </div>
-            </div>
-            <button className="button">Connect Wallet</button>
-          </div>
-        );
-      case 'limit':
-        return (
-          <div className="limit-section">
-            <h2>Limit Orders</h2>
-            <p>Functionality for Limit Orders will be here.</p>
-          </div>
-        );
-      case 'mint':
-        return (
-          <div className="mint-section">
-            <h2>Mint Tokens</h2>
-            <p>Functionality for Minting Tokens will be here.</p>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
+  const navigate = useNavigate();
   return (
-    <div className="market-page">
-      <div className="market-content">
-        <h1>Market</h1>
-        <p>Here you can buy/sell tokens.</p>
-        <div className="tabs">
-          <button
-            className={`tab ${activeTab === 'swap' ? 'active' : ''}`}
-            onClick={() => setActiveTab('swap')}
-          >
-            Swap
-          </button>
-          <button
-            className={`tab ${activeTab === 'limit' ? 'active' : ''}`}
-            onClick={() => setActiveTab('limit')}
-          >
-            Limit
-          </button>
-          <button
-            className={`tab ${activeTab === 'mint' ? 'active' : ''}`}
-            onClick={() => setActiveTab('mint')}
-          >
-            Mint
-          </button>
+    <div className="market">
+      <div className="market-header">
+        <img src={tsTonIcon} alt="tsTON" className="tsTon-icon" />
+        <div className="market-title">
+          <h2>tsTON</h2>
+          <p>Tonstakers</p>
         </div>
-        {renderTabContent()}
+      </div>
+      <div className="market-details">
+        <div className="market-info">
+          <div>Maturity</div>
+          <div className="info-value">27 Jun 2024</div>
+          <div className="info-subvalue">15 days</div>
+        </div>
+        <div className="market-info">
+          <div>Liquidity</div>
+          <div className="info-value">$34,868,190.62</div>
+        </div>
+        <div className="market-info">
+          <div>Underlying APY</div>
+          <div className="info-value">2.448%</div>
+          <div className="info-subvalue">Price $3,552.24</div>
+        </div>
+        <div className="market-info">
+          <div>Implied APY</div>
+          <div className="info-value">18.67%</div>
+        </div>
+      </div>
+      <div className="market-subdetails">
+        <div className="market-subdetail">
+          <img src={ytIcon} alt="YT" className="subdetail-icon" />
+          <div className="subdetail-info">
+            <div>Long Yield APY</div>
+            <div className="subdetail-value">-100%</div>
+            <div className="subdetail-subvalue">Price $26.23</div>
+          </div>
+        </div>
+        <div className="market-subdetail">
+          <img src={ptIcon} alt="PT" className="subdetail-icon" />
+          <div className="subdetail-info">
+            <div>Fixed APY</div>
+            <div className="subdetail-value">18.67%</div>
+            <div className="subdetail-subvalue">Price $3,526.51</div>
+          </div>
+        </div>
+      </div>
+      <div className="action-button-container">
+        <CommonButton onClick={() => navigate('/test-tokens')} text="Get test tokens" />
       </div>
     </div>
   );

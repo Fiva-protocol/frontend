@@ -13,8 +13,11 @@ const Converter = () => {
       case 'mint':
         return (
           <div className="converter-section">
+            <h1>Mint your Tokens</h1>
+            <p>Mint SY tokens back into their corresponding.</p>
+            <br></br>
             <div className="input-group">
-              <label>Input</label>
+              <label>Input Balance: 0</label>
               <div className="input-row">
                 <select className="input-select">
                   <option value="tsTon">tsTON</option>
@@ -42,14 +45,17 @@ const Converter = () => {
                 <input type="number" placeholder="0" className="input-number" />
               </div>
             </div>
-            <button className="button">Connect Wallet</button>
+            <button className="button">Mint</button>
           </div>
         );
       case 'redeem':
         return (
           <div className="converter-section">
+            <h1>Redeem your Tokens</h1>
+            <p>Redeem SY tokens back into their corresponding.</p>
+            <br></br>
             <div className="input-group">
-              <label>Input</label>
+              <label>Input        Balance: 0</label>
               <div className="input-row">
                 <div className="output-label">
                   <span><img src={tsTonIcon} alt="PT tsTON" />PT tsTON</span>
@@ -57,6 +63,7 @@ const Converter = () => {
                 </div>
                 <input type="number" placeholder="0" className="input-number" />
               </div>
+              <label>Balance: 0</label>
               <div className="input-row">
                 <div className="output-label">
                   <span><img src={tsTonIcon} alt="YT tsTON" />YT tsTON</span>
@@ -78,7 +85,7 @@ const Converter = () => {
                 <input type="number" placeholder="0" className="input-number" />
               </div>
             </div>
-            <button className="button">Connect Wallet</button>
+            <button className="button">Redeem</button>
           </div>
         );
       default:

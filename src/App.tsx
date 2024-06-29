@@ -5,10 +5,11 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Dashboard from './components/Dashboard';
 import TestTokens from './components/TestTokens';
-import Balance from './components/Balance';
 import Market from './components/Market';
+import Swap from './components/Swap';
 import Converter from './components/Converter';
 import Onboarding from './components/Onboarding';
+import Pools from './components/Pools';
 import Admin from './components/Admin';
 import './App.css';
 
@@ -28,7 +29,7 @@ const AppRoutes: React.FC = () => {
   const navigate = useNavigate();
 
   const navigateToBalance = () => {
-    navigate('/test-tokens');
+    navigate('/converter');
   };
 
   return (
@@ -41,8 +42,9 @@ const AppRoutes: React.FC = () => {
           <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
           <Route path="/dashboard" element={<><Dashboard /></>} />
           <Route path="/test-tokens" element={<><TestTokens /></>} />
-          <Route path="/balance" element={<><Balance /></>} />
+          <Route path="/pools" element={<><Pools /></>} />
           <Route path="/market" element={<><Market /></>} />
+          <Route path="/swap" element={<><Swap /></>} />
           <Route path="/converter" element={<><Converter /></>} />
           <Route path="/" element={<Navigate to="/onboarding" />} />
           <Route path="/admin-ui" element={<><Admin /></>} />

@@ -1,117 +1,97 @@
-/* src/components/Market.css */
-.market-page {
+/* Market.css */
+.market {
+  background: linear-gradient(145deg, #0e0e0e, #1c1c1c);
   padding: 20px;
+  border-radius: 20px;
+  color: white;
+  margin: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.market-content {
-  background-color: #1a1a1a;
-  padding: 20px;
-  border-radius: 8px;
-  color: #fff;
-}
-
-.tabs {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #333;
-}
-
-.tab {
-  padding: 10px 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #aaa;
-  font-size: 16px;
-  margin-right: 20px;
-  position: relative;
-}
-
-.tab.active {
-  color: #fff;
-}
-
-.tab.active::after {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: #fff;
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-}
-
-.swap-section,
-.limit-section,
-.mint-section {
-  margin-top: 20px;
-}
-
-.swap-buttons {
+.market-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
-.swap-button {
-  padding: 10px 20px;
-  background: #1a1a1a;
-  border: 1px solid #555;
-  border-radius: 24px;
-  cursor: pointer;
-  color: #fff;
-  font-size: 16px;
-  flex: 1;
-  margin: 0 5px;
-  transition: background-color 0.3s;
+.tsTon-icon {
+  width: 40px;
+  height: 40px;
 }
 
-.swap-button.active {
-  background: linear-gradient(90deg, #8e2de2, #4a00e0);
-  color: #fff;
+.market-title h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
 }
 
-.swap-button:not(.active):hover {
-  background: #333;
+.market-title p {
+  margin: 0;
+  font-size: 14px;
+  color: #a0a0a0;
 }
 
-.input-group {
-  margin-bottom: 20px;
+.market-details {
+  background: #252525;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
-.input-row {
+.market-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.info-value {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.info-subvalue {
+  display: block;
+  font-size: 10px;
+  color: #a0a0a0;
+}
+
+.market-subdetails {
+  background: #252525;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.market-subdetail {
   display: flex;
   align-items: center;
-  background: #333;
-  border-radius: 8px;
-  padding: 10px;
+  justify-content: space-between;
+  margin-bottom: 5px;
 }
 
-.input-select {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 16px;
-  margin-right: 10px;
+.subdetail-icon {
+  width: 40px;
+  height: 40px;
 }
 
-.input-number {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 16px;
-  width: 100%;
+.subdetail-info {
+  flex-grow: 1;
+  margin-left: 10px;
 }
 
-.swap-icon {
+.subdetail-value {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.subdetail-subvalue {
+  display: block;
+  font-size: 10px;
+  color: #a0a0a0;
+}
+
+.action-button-container {
   display: flex;
   justify-content: center;
-  margin: 10px 0;
-}
-
-.swap-icon img {
-  width: 24px;
-  height: auto;
+  margin-top: 20px;
 }
