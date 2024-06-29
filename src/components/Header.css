@@ -1,6 +1,6 @@
 /* src/components/Header.css */
 .header {
-  /* background-color: #0d0d0d; */
+  background-color: #0d0d0d;
   padding: 10px;
   display: flex;
   justify-content: space-between;

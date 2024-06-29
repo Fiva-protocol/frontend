@@ -37,7 +37,7 @@ const AppRoutes: React.FC = () => {
       
       <div className="min-h-screen items-center mx-auto justify-center">
       <Header />
-        <div className="container flex-grow mx-auto w-12/12 md:w-5/12">
+        <div className="container flex-grow mx-auto w-12/12 md:w-5/12 pb-20">
         <Routes>
           <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
           <Route path="/dashboard" element={<><Dashboard /></>} />

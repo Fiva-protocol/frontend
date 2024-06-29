@@ -1,5 +1,6 @@
 /* src/components/Footer.css */
 .footer {
+  background-color: #0d0d0d;
   color: #fff;
   padding: 15px 0;
   position: fixed;
@@ -14,7 +15,6 @@
   border-top: 1px solid #333;
   z-index: 1000; /* Ensure footer is on top */
   font-size: 16px; /* Increase font size */
-
 }
 
 .footer a {
