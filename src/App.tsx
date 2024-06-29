@@ -9,7 +9,7 @@ import Market from './components/Market';
 import Swap from './components/Swap';
 import Converter from './components/Converter';
 import Onboarding from './components/Onboarding';
-import Pools from './components/Pools';
+import Pools from './components/pools/Pools';
 import Admin from './components/Admin';
 import './App.css';
 

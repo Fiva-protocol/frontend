@@ -1,15 +1,15 @@
 /* src/components/Footer.css */
 .footer {
-  background-color: #000;
   color: #fff;
   padding: 15px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* position: fixed; */
   height: 70px;
 
-  bottom: 0;
   width: 100%;
   border-top: 1px solid #333;
   z-index: 1000; /* Ensure footer is on top */
