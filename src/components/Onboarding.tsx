@@ -17,16 +17,16 @@ const Onboarding = ({ navigateToBalance }) => {
   };
 
   return (
-    <div className="onboarding-container">
+    <>
       {step === 1 && <OnboardingStep1 nextStep={nextStep} />}
       {step === 2 && <OnboardingStep2 nextStep={nextStep} />}
       {step === 3 && <OnboardingStep3 nextStep={nextStep} />}
-      <div className="progress-indicator">
+      {/* <div className="progress-indicator">
         <span className={step === 1 ? 'active' : ''}></span>
         <span className={step === 2 ? 'active' : ''}></span>
         <span className={step === 3 ? 'active' : ''}></span>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 };
 

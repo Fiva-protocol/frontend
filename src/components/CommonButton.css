@@ -1,6 +1,7 @@
 /* src/components/CommonButton.css */
 .button {
-  display: block;
+  
+  /* display: block;
   padding: 15px 30px;
   background: linear-gradient(90deg, #8e2de2, #4a00e0);
   border: none;
@@ -9,8 +10,29 @@
   font-size: 16px;
   cursor: pointer;
   text-align: center;
-  margin: 10px 0;
+  margin: 10px 0; */
+  display: flex;
+  border-radius: 12px;
+  /* width: 345px;
+  height: 41px; */
+  /* height: 41px; */
+  padding: 8px 12px;
+  height: 41px;
+  justify-content: center;
+  align-items: center;
+  /* display: block; */
+  width: 100%;
+  /* gap: 4px; */
+  background: var(--Purple-Pink-Gradient, linear-gradient(214deg, #6262D9 21.1%, #9D62D9 102.26%, #9D62D9 102.26%));
+
 }
+
+/* .button {
+  @apply w-full
+  
+} */
+
+
 
 .button:disabled {
   background: #555;

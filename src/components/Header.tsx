@@ -1,4 +1,4 @@
-import React from 'react';
+
 import './Header.css';
 import logo from '../assets/icons/fivaLogo.svg';
 import { TonConnectButton } from '@tonconnect/ui-react';

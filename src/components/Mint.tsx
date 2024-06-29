@@ -22,7 +22,7 @@ const Mint: FC<MintProps> = ({}) => {
         <div className="flex flex-col my-10 mx-5">
             <button
                 onClick={onClick}
-                className={`mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded`}
+                className="button"
             >
                 Mint 10 tsTON
             </button>
