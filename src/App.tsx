@@ -42,9 +42,14 @@ const AppRoutes: React.FC = () => {
           <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
           <Route path="/dashboard" element={<><Dashboard /></>} />
           <Route path="/test-tokens" element={<><TestTokens /></>} />
+<<<<<<< HEAD
           <Route path="/pools" element={<><Pools /></>} />
           <Route path="/market" element={<><Market /></>} />
           <Route path="/swap" element={<><Swap /></>} />
+=======
+          <Route path="/balance" element={<><Balance /></>} />
+          <Route path="/market" element={<><Market /></>} />
+>>>>>>> 427676e77701ed2676dfc83c0ff9716c8050056b
           <Route path="/converter" element={<><Converter /></>} />
           <Route path="/" element={<Navigate to="/onboarding" />} />
           <Route path="/admin-ui" element={<><Admin /></>} />
