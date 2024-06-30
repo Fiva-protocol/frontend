@@ -1,36 +1,52 @@
-import { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Address, toNano } from '@ton/core';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { MintPTYT } from '../api/mintPTYT';
+import { useJettonMinter } from '../hooks/useJettonMinter';
 
+interface MintProps {
+    inputValue: number;
+}
 
-interface MintProps {}
-
-const MintFiva: FC<MintProps> = ({}) => {
+const MintFiva: FC<MintProps> = ({ inputValue }) => {
     const [tonConnectUI] = useTonConnectUI();
     const userAddress = useTonAddress();
+    const jettonMinterAddress = Address.parse("kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf");
+    const { jettonWalletAddress } = useJettonMinter(jettonMinterAddress, Address.parse(userAddress));
 
-    const onClick = () => {
-        if (userAddress) {
-            const masterAddr = Address.parse('EQBwKHH77hKzDcaDgcbqHOWvDOHLZ8ItRkl34TxqSfRyggna');
-            const ytAddr = Address.parse('EQCbNMzxiIDNVbqH3-t1CVPfX7YwdA3gGg0V2Xec7rVCGUGm');
-            const ptAddr =Address.parse('EQA7y4XyByQkri_JIxfn4jBU-DzoDGfhIVavR_eMj3RHLKa_');
+    const onClick = async () => {
+        if (userAddress && jettonWalletAddress) {
+            const masterAddress = Address.parse('EQAHmEAgPST8XV4GN6r6E4NesuLs7lDbzsSW1ougMxItut9S');
+            const yieldMinterAddress = Address.parse('EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW');
+            const principleMinterAddress = Address.parse('EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK');
+            const amount = toNano(inputValue);  // Конвертируем ввод пользователя в Nano
 
-
-            MintPTYT(tonConnectUI, masterAddr,ytAddr, ptAddr, Address.parse(userAddress), toNano(10))
-                .then(() => console.log('successfully sent transaction'))
-                .catch(console.error);
+            try {
+                await MintPTYT(
+                    tonConnectUI,
+                    jettonWalletAddress,
+                    masterAddress,
+                    jettonWalletAddress,
+                    toNano(0.15),
+                    amount,  // Используем введенное пользователем значение
+                    yieldMinterAddress,
+                    principleMinterAddress,
+                    Address.parse(userAddress)
+                );
+                console.log('successfully sent transaction');
+            } catch (error) {
+                console.error(error);
+            }
         }
     };
 
     return (
         <div className="flex flex-col my-10 mx-5">
-            <h1 className="text-2xl">Mint testnet PT/YT tokens</h1>
             <button
                 onClick={onClick}
-                className="button"
+                className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
             >
-                Mint 10 PT/YT tsTON
+                Mint {inputValue || 10} PT/YT tsTON  {/* Отображаем ввод пользователя или значение по умолчанию */}
             </button>
         </div>
     );

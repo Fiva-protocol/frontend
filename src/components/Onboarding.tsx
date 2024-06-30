@@ -5,14 +5,14 @@ import OnboardingStep2 from './OnboardingStep2';
 import OnboardingStep3 from './OnboardingStep3';
 import './Onboarding.css';
 
-const Onboarding = ({ navigateToConverter }: { navigateToConverter: () => void }) => {
+const Onboarding = ({ navigateToBalance }: { navigateToBalance: () => void }) => {
   const [step, setStep] = useState(1);
 
   const nextStep = () => {
     if (step < 3) {
       setStep(step + 1);
     } else {
-      navigateToConverter();
+      navigateToBalance();
     }
   };
 

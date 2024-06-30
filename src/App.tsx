@@ -30,7 +30,7 @@ const App: React.FC = () => {
 const AppRoutes: React.FC = () => {
   const navigate = useNavigate();
 
-  const navigateToConverter = () => {
+  const navigateToBalance = () => {
     navigate('/converter');
   };
 
@@ -44,7 +44,7 @@ const AppRoutes: React.FC = () => {
                     path="*"
                     element={<><PageNotFound /></>}
                 />
-            <Route path="/onboarding" element={<Onboarding navigateToConverter={navigateToConverter} />} />
+            <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
             <Route
               path="/dashboard"
               element={

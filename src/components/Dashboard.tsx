@@ -79,7 +79,7 @@ const Dashboard: React.FC = () => {
               <div className="asset-info">
                 <img src={ptIcon} alt="PT" />
                 <div className="asset-details">
-                  <span className="asset-balance">PT balance - $0</span>
+                  <span className="asset-balance">PT balance</span>
                   <span className="asset-apy">APY 18.67%</span>
                 </div>
               </div>
@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
               <div className="asset-info">
                 <img src={ytIcon} alt="YT" />
                 <div className="asset-details">
-                  <span className="asset-balance">YT balance - $0</span>
+                  <span className="asset-balance">YT balance</span>
                   <span className="asset-apy">APY 18.67%</span>
                 </div>
               </div>
@@ -99,7 +99,7 @@ const Dashboard: React.FC = () => {
               <div className="asset-info">
                 <img src={lpIcon} alt="LP" />
                 <div className="asset-details">
-                  <span className="asset-balance">LP balance - $0</span>
+                  <span className="asset-balance">LP balance</span>
                   <span className="asset-apy">APY 18.67%</span>
                 </div>
               </div>
@@ -112,7 +112,7 @@ const Dashboard: React.FC = () => {
             <div className="asset-info">
               <img src={ptIcon} alt="PT" />
               <div className="asset-details">
-                <span className="asset-balance">PT balance - $0</span>
+                <span className="asset-balance">PT balance</span>
                 <span className="asset-apy">APY 18.67%</span>
               </div>
             </div>
@@ -124,7 +124,7 @@ const Dashboard: React.FC = () => {
             <div className="asset-info">
               <img src={ytIcon} alt="YT" />
               <div className="asset-details">
-                <span className="asset-balance">YT balance - $0</span>
+                <span className="asset-balance">YT balance</span>
                 <span className="asset-apy">APY 18.67%</span>
               </div>
             </div>

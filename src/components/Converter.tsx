@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Converter.css';
 import './CommonButton.css';
 import tsTonIcon from '../assets/icons/tsTonIcon.svg';
 import downArrow from '../assets/icons/downArrow.svg';
+import MintFiva from './MintYTPT';
+import { useTonAddress } from '@tonconnect/ui-react';  // Импортируем хук для получения адреса кошелька
 
 enum Tab {
   Mint = 'mint',
@@ -11,6 +13,16 @@ enum Tab {
 
 const Converter: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Mint);
+  const [inputValue, setInputValue] = useState<number>(10);  // Устанавливаем значение по умолчанию 10
+  const userAddress = useTonAddress();  // Получаем адрес кошелька
+
+  useEffect(() => {
+    setPtValue(inputValue);
+    setYtValue(inputValue);
+  }, [inputValue]);
+
+  const [ptValue, setPtValue] = useState<number>(inputValue);
+  const [ytValue, setYtValue] = useState<number>(inputValue);
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -41,7 +53,13 @@ const Converter: React.FC = () => {
                   <option value="tsTon">tsTON</option>
                   {/* Add other options here */}
                 </select>
-                <input type="number" placeholder="0" className="input-number" />
+                <input
+                  type="number"
+                  placeholder="10"
+                  className="input-number-ts"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(Number(e.target.value))}
+                />
               </div>
             </div>
             <div className="swap-icon">
@@ -53,17 +71,35 @@ const Converter: React.FC = () => {
                   <span><img src={tsTonIcon} alt="PT tsTON" />PT tsTON</span>
                   <span>25 Jul 2024</span>
                 </div>
-                <input type="number" placeholder="0" className="input-number" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  className="input-number-pt"
+                  value={ptValue}
+                  readOnly
+                />
               </div>
               <div className="input-row">
                 <div className="output-label">
                   <span><img src={tsTonIcon} alt="YT tsTON" />YT tsTON</span>
                   <span>25 Jul 2024</span>
                 </div>
-                <input type="number" placeholder="0" className="input-number" />
+                <input
+                  type="number"
+                  placeholder="0"
+                  className="input-number-yt"
+                  value={ytValue}
+                  readOnly
+                />
               </div>
             </div>
-            <button className="button">Mint</button>
+            {userAddress ? (
+              <MintFiva inputValue={inputValue.toString()} />  
+            ) : (
+              <button className="button" onClick={() => {/*connect wallet info */}}>
+                Connect Wallet
+              </button>
+            )}
           </div>
         );
       case Tab.Redeem:
