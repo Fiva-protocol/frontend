@@ -8,6 +8,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px; /* Добавлено для отступа */
+}
+
+.dashboard-header h1 {
+  font-size: 24px; /* Убедитесь, что размер шрифта совпадает */
+  font-weight: bold; /* Жирный текст */
+}
+
+.dashboard-header p {
+  font-size: 16px; /* Размер шрифта для подзаголовка */
+  color: #ccc; /* Цвет текста для подзаголовка */
 }
 
 .dashboard-info {
@@ -69,4 +80,5 @@
   padding: 10px 20px;
   cursor: pointer;
   margin-top: 20px;
+  width: 100%; /* Добавлено для полной ширины */
 }

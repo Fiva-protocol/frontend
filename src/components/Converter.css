@@ -13,7 +13,7 @@
 .tabs {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 20px;
+  margin-top: 10px; /* Добавлено для отступа сверху */
 }
 
 .tab {

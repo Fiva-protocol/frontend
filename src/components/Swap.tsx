@@ -4,9 +4,9 @@ import './Swap.css';
 import CommonButton from './CommonButton';
 import downArrow from '../assets/icons/downArrow.svg';
 
-const Swap = () => {
-  const [activeTab, setActiveTab] = useState('YT');
-  const [activeSubTab, setActiveSubTab] = useState('buy');
+const Swap: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'YT' | 'PT'>('YT');
+  const [activeSubTab, setActiveSubTab] = useState<'buy' | 'sell'>('buy');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,7 +18,7 @@ const Swap = () => {
     }
   }, [location]);
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab: 'YT' | 'PT') => {
     setActiveTab(tab);
     setActiveSubTab('buy'); // Reset sub-tab to 'buy' when switching main tabs
     if (tab === 'PT') {
@@ -30,26 +30,26 @@ const Swap = () => {
 
   return (
     <div className="swap-page">
-      <div className="swap-tabs dashboard-tabs">
-        <button
-          className={`swap-button ${activeTab === 'YT' ? 'active' : ''}`}
-          onClick={() => handleTabClick('YT')}
-        >
-          YT
-        </button>
-        <button
-          className={`swap-button ${activeTab === 'PT' ? 'active' : ''}`}
-          onClick={() => handleTabClick('PT')}
-        >
-          PT
-        </button>
-      </div>
       <div className="swap-content">
         <div className="swap-section">
           <div>
             <h1>Swap {activeTab}</h1>
             <p>Swap your tokens here.</p>
             <br />
+          </div>
+          <div className="segmented-control">
+            <span
+              className={`${activeTab === 'YT' ? 'active' : ''}`}
+              onClick={() => handleTabClick('YT')}
+            >
+              YT
+            </span>
+            <span
+              className={`${activeTab === 'PT' ? 'active' : ''}`}
+              onClick={() => handleTabClick('PT')}
+            >
+              PT
+            </span>
           </div>
           <div className="swap-buttons sub-tabs">
             <button

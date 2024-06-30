@@ -1,4 +1,3 @@
-// src/components/Converter.js
 import React, { useState } from 'react';
 import './Converter.css';
 import './CommonButton.css';
@@ -6,7 +5,7 @@ import tsTonIcon from '../assets/icons/tsTonIcon.svg';
 import downArrow from '../assets/icons/downArrow.svg';
 
 const Converter = () => {
-  const [activeTab, setActiveTab] = useState('mint');
+  const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint');
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -15,6 +14,20 @@ const Converter = () => {
           <div className="converter-section">
             <h1>Mint your Tokens</h1>
             <p>Mint SY tokens back into their corresponding.</p>
+            <div className="tabs">
+              <button
+                className={`tab ${activeTab === 'mint' ? 'active' : ''}`}
+                onClick={() => setActiveTab('mint')}
+              >
+                Mint
+              </button>
+              <button
+                className={`tab ${activeTab === 'redeem' ? 'active' : ''}`}
+                onClick={() => setActiveTab('redeem')}
+              >
+                Redeem
+              </button>
+            </div>
             <br></br>
             <div className="input-group">
               <label>Input Balance: 0</label>
@@ -53,9 +66,23 @@ const Converter = () => {
           <div className="converter-section">
             <h1>Redeem your Tokens</h1>
             <p>Redeem SY tokens back into their corresponding.</p>
+            <div className="tabs">
+              <button
+                className={`tab ${activeTab === 'mint' ? 'active' : ''}`}
+                onClick={() => setActiveTab('mint')}
+              >
+                Mint
+              </button>
+              <button
+                className={`tab ${activeTab === 'redeem' ? 'active' : ''}`}
+                onClick={() => setActiveTab('redeem')}
+              >
+                Redeem
+              </button>
+            </div>
             <br></br>
             <div className="input-group">
-              <label>Input        Balance: 0</label>
+              <label>Input Balance: 0</label>
               <div className="input-row">
                 <div className="output-label">
                   <span><img src={tsTonIcon} alt="PT tsTON" />PT tsTON</span>
@@ -96,20 +123,6 @@ const Converter = () => {
   return (
     <div className="converter-page">
       <div className="converter-content">
-        <div className="tabs">
-          <button
-            className={`tab ${activeTab === 'mint' ? 'active' : ''}`}
-            onClick={() => setActiveTab('mint')}
-          >
-            Mint
-          </button>
-          <button
-            className={`tab ${activeTab === 'redeem' ? 'active' : ''}`}
-            onClick={() => setActiveTab('redeem')}
-          >
-            Redeem
-          </button>
-        </div>
         {renderTabContent()}
       </div>
     </div>

@@ -6,26 +6,24 @@ import lpIcon from '../assets/icons/lpIcon.svg';
 import infoIcon from '../assets/icons/infoIcon.svg';
 import { useTonAddress } from '@tonconnect/ui-react';
 
-const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState('My Positions');
-  const [activeSubTab, setActiveSubTab] = useState('All Assets');
+const Dashboard: React.FC = () => {
+  const [activeSubTab, setActiveSubTab] = useState<'All Assets' | 'PT' | 'YT' | 'LP'>('All Assets');
   const address = useTonAddress();
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
+  const handleSubTabClick = (subTab: 'All Assets' | 'PT' | 'YT' | 'LP') => {
+    setActiveSubTab(subTab);
   };
 
-  const handleSubTabClick = (subTab) => {
-    setActiveSubTab(subTab);
+  const formatAddress = (address: string) => {
+    return `${address.slice(0, 6)}...${address.slice(-5)}`;
   };
 
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h2>My Dashboard</h2>
-        <div className="wallet-address">
-          {address ? address : 'Connect wallet'}
-          <img src={infoIcon} alt="info" className="info-icon" />
+        <div>
+          <h1>My Dashboard</h1>
+          <p>{address ? formatAddress(address) : 'Connect wallet'}</p>
         </div>
       </div>
       <div className="dashboard-info">
@@ -48,91 +46,68 @@ const Dashboard = () => {
         </div>
         <button className="common-button">Claim Yield & Rewards</button>
       </div>
-      <div className="dashboard-tabs">
+      <div className="sub-tabs">
         <button
-          className={activeTab === 'My Positions' ? 'active' : ''}
-          onClick={() => handleTabClick('My Positions')}
+          className={activeSubTab === 'All Assets' ? 'active' : ''}
+          onClick={() => handleSubTabClick('All Assets')}
         >
-          My Positions
+          All Assets
         </button>
         <button
-          className={activeTab === 'My Orders' ? 'active' : ''}
-          onClick={() => handleTabClick('My Orders')}
+          className={activeSubTab === 'PT' ? 'active' : ''}
+          onClick={() => handleSubTabClick('PT')}
         >
-          My Orders
+          PT
+        </button>
+        <button
+          className={activeSubTab === 'YT' ? 'active' : ''}
+          onClick={() => handleSubTabClick('YT')}
+        >
+          YT
+        </button>
+        <button
+          className={activeSubTab === 'LP' ? 'active' : ''}
+          onClick={() => handleSubTabClick('LP')}
+        >
+          LP
         </button>
       </div>
-      {activeTab === 'My Positions' && (
-        <div>
-          <div className="sub-tabs">
-            <button
-              className={activeSubTab === 'All Assets' ? 'active' : ''}
-              onClick={() => handleSubTabClick('All Assets')}
-            >
-              All Assets
-            </button>
-            <button
-              className={activeSubTab === 'PT' ? 'active' : ''}
-              onClick={() => handleSubTabClick('PT')}
-            >
-              PT
-            </button>
-            <button
-              className={activeSubTab === 'YT' ? 'active' : ''}
-              onClick={() => handleSubTabClick('YT')}
-            >
-              YT
-            </button>
-            <button
-              className={activeSubTab === 'LP' ? 'active' : ''}
-              onClick={() => handleSubTabClick('LP')}
-            >
-              LP
-            </button>
+      <div className="positions-content">
+        {activeSubTab === 'All Assets' && (
+          <div>
+            <div className="info-item">
+              <img src={ptIcon} alt="PT" />
+              <span>PT balance - $0</span>
+            </div>
+            <div className="info-item">
+              <img src={ytIcon} alt="YT" />
+              <span>YT balance - $0</span>
+            </div>
+            <div className="info-item">
+              <img src={lpIcon} alt="LP" />
+              <span>LP balance - $0</span>
+            </div>
           </div>
-          <div className="positions-content">
-            {activeSubTab === 'All Assets' && (
-              <div>
-                <div className="info-item">
-                  <img src={ptIcon} alt="PT" />
-                  <span>PT balance - $0</span>
-                </div>
-                <div className="info-item">
-                  <img src={ytIcon} alt="YT" />
-                  <span>YT balance - $0</span>
-                </div>
-                <div className="info-item">
-                  <img src={lpIcon} alt="LP" />
-                  <span>LP balance - $0</span>
-                </div>
-              </div>
-            )}
-            {activeSubTab === 'PT' && (
-              <div className="info-item">
-                <img src={ptIcon} alt="PT" />
-                <span>PT balance - $0</span>
-              </div>
-            )}
-            {activeSubTab === 'YT' && (
-              <div className="info-item">
-                <img src={ytIcon} alt="YT" />
-                <span>YT balance - $0</span>
-              </div>
-            )}
-            {activeSubTab === 'LP' && (
-              <div className="info-item">
-                <img src={lpIcon} alt="LP" />
-                <span>LP balance - $0</span>
-              </div>
-            )}
+        )}
+        {activeSubTab === 'PT' && (
+          <div className="info-item">
+            <img src={ptIcon} alt="PT" />
+            <span>PT balance - $0</span>
           </div>
-        </div>
-      )}
-      {activeTab === 'My Orders' && (
-        <div className="orders-content">
-          {/*Content for tab My Orders */}
-        </div>
-      )}
+        )}
+        {activeSubTab === 'YT' && (
+          <div className="info-item">
+            <img src={ytIcon} alt="YT" />
+            <span>YT balance - $0</span>
+          </div>
+        )}
+        {activeSubTab === 'LP' && (
+          <div className="info-item">
+            <img src={lpIcon} alt="LP" />
+            <span>LP balance - $0</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
