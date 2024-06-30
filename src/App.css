@@ -73,7 +73,7 @@ code {
 }
 
 /* main input in app */
-input[type=text] {
+/* input[type=text] {
   background-color: #0d0d0d;
   border-radius: 8px;
   border: 2px solid red;
@@ -85,4 +85,27 @@ input[type=text] {
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
+} */
+
+.half-input-right {
+  background-color: #0d0d0d;
+  border-radius: 0px 8px 8px 0px;
+  border: 1px solid var(--Dusty-Grey, #d9d9d9);
+  padding: 6px;
+  /* height: 48px; */
+  display: flex;
+}
+
+.half-input-right:focus {
+  outline: none;
+}
+
+.half-input-left {
+  background-color: #0d0d0d;
+  border-radius: 8px 0px 0px 8px;
+  border: 1px solid var(--Dusty-Grey, #d9d9d9);
+  padding: 6px;
+  /* padding: 4px; */
+  /* height: 48px; */
+  display: flex;
 }
