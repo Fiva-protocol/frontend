@@ -13,7 +13,7 @@
 .tabs {
   display: flex;
   justify-content: space-around;
-  margin-top: 10px; /* Добавлено для отступа сверху */
+  margin-top: 10px; 
 }
 
 .tab {
@@ -45,7 +45,7 @@
   background: #333;
   border-radius: 8px;
   padding: 10px;
-  margin-bottom: 10px; /* Add margin between input rows */
+  margin-bottom: 10px; 
 }
 
 .input-select {

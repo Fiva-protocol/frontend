@@ -4,26 +4,31 @@ import './CommonButton.css';
 import tsTonIcon from '../assets/icons/tsTonIcon.svg';
 import downArrow from '../assets/icons/downArrow.svg';
 
-const Converter = () => {
-  const [activeTab, setActiveTab] = useState<'mint' | 'redeem'>('mint');
+enum Tab {
+  Mint = 'mint',
+  Redeem = 'redeem',
+}
+
+const Converter: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<Tab>(Tab.Mint);
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'mint':
+      case Tab.Mint:
         return (
           <div className="converter-section">
             <h1>Mint your Tokens</h1>
             <p>Mint SY tokens back into their corresponding.</p>
             <div className="tabs">
               <button
-                className={`tab ${activeTab === 'mint' ? 'active' : ''}`}
-                onClick={() => setActiveTab('mint')}
+                className={`tab ${activeTab === Tab.Mint ? 'active' : ''}`}
+                onClick={() => setActiveTab(Tab.Mint)}
               >
                 Mint
               </button>
               <button
-                className={`tab ${activeTab === 'redeem' ? 'active' : ''}`}
-                onClick={() => setActiveTab('redeem')}
+                className={`tab ${activeTab === Tab.Redeem ? 'active' : ''}`}
+                onClick={() => setActiveTab(Tab.Redeem)}
               >
                 Redeem
               </button>
@@ -61,21 +66,21 @@ const Converter = () => {
             <button className="button">Mint</button>
           </div>
         );
-      case 'redeem':
+      case Tab.Redeem:
         return (
           <div className="converter-section">
             <h1>Redeem your Tokens</h1>
             <p>Redeem SY tokens back into their corresponding.</p>
             <div className="tabs">
               <button
-                className={`tab ${activeTab === 'mint' ? 'active' : ''}`}
-                onClick={() => setActiveTab('mint')}
+                className={`tab ${activeTab === Tab.Mint ? 'active' : ''}`}
+                onClick={() => setActiveTab(Tab.Mint)}
               >
                 Mint
               </button>
               <button
-                className={`tab ${activeTab === 'redeem' ? 'active' : ''}`}
-                onClick={() => setActiveTab('redeem')}
+                className={`tab ${activeTab === Tab.Redeem ? 'active' : ''}`}
+                onClick={() => setActiveTab(Tab.Redeem)}
               >
                 Redeem
               </button>
