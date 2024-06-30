@@ -12,6 +12,8 @@ import Onboarding from './components/Onboarding';
 import Pools from './components/pools/Pools';
 import Admin from './components/Admin';
 import './App.css';
+import PoolsDetails from './components/pools/pools-details/PoolsDetails';
+import PageNotFound from './components/page-not-found/PageNotFound';
 
 const manifestUrl = 'https://raw.githubusercontent.com/Fiva-protocol/contracts-2/main/manifest/manifest.json';
 
@@ -34,22 +36,83 @@ const AppRoutes: React.FC = () => {
 
   return (
     <>
-      
       <div className="min-h-screen items-center mx-auto justify-center">
-      <Header />
+        <Header />
         <div className="container flex-grow mx-auto w-12/12 md:w-5/12 pb-20">
-        <Routes>
-          <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
-          <Route path="/dashboard" element={<><Dashboard /></>} />
-          <Route path="/test-tokens" element={<><TestTokens /></>} />
-          <Route path="/pools" element={<><Pools /></>} />
-          <Route path="/market" element={<><Market /></>} />
-          <Route path="/swap/pt" element={<><Swap /></>} />
-          <Route path="/swap" element={<><Swap /></>} />
-          <Route path="/converter" element={<><Converter /></>} />
-          <Route path="/" element={<Navigate to="/onboarding" />} />
-          <Route path="/admin-ui" element={<><Admin /></>} />
-        </Routes>
+          <Routes>
+          <Route
+                    path="*"
+                    element={<><PageNotFound /></>}
+                />
+            <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
+            <Route
+              path="/dashboard"
+              element={
+                <>
+                  <Dashboard />
+                </>
+              }
+            />
+            <Route
+              path="/test-tokens"
+              element={
+                <>
+                  <TestTokens />
+                </>
+              }
+            />
+            <Route
+              path="/pools"
+              element={
+                <>
+                  <Pools />
+                </>
+              }
+            />
+            <Route path="/pools/details/pt" element={<PoolsDetails type="pt" />} />
+            <Route path="/pools/details/yt" element={<PoolsDetails type="yt" />} />
+            <Route
+              path="/market"
+              element={
+                <>
+                  <Market />
+                </>
+              }
+            />
+            <Route
+              path="/swap/pt"
+              element={
+                <>
+                  <Swap />
+                </>
+              }
+            />
+            <Route
+              path="/swap"
+              element={
+                <>
+                  <Swap />
+                </>
+              }
+            />
+            <Route
+              path="/converter"
+              element={
+                <>
+                  <Converter />
+                </>
+              }
+            />
+            <Route path="/" element={<Navigate to="/onboarding" />} />
+            <Route
+              path="/admin-ui"
+              element={
+                <>
+                  <Admin />
+                </>
+              }
+            />
+          </Routes>
         </div>
         <Footer />
       </div>

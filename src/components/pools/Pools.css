@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-.active {
+.segmented-control > .active {
   border-radius: 14px;
   border: 0.5px solid rgba(27, 20, 20, 0.04);
   background: var(--Dark-Purple, #6161d6);
@@ -33,4 +33,5 @@
   padding: 16px;
   flex-direction: column;
   align-items: flex-start;
+  cursor: pointer;
 }

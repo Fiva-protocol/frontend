@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import './Pools.css';
 import tsTonIcon from '../../assets/icons/tsTonIcon.svg';
+import { PoolsDetailsProps } from './pools-details/PoolsDetails';
 
-const Market = () => {
-  const [activeTab, setActiveTab] = useState('active');
+const Pools = () => {
+  const [activeControl, setActiveControl] = useState('active');
 
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
+  const handleSegmentedControlClick = (control: 'active' | 'inactive') => {
+    setActiveControl(control);
   };
 
   return (
@@ -26,20 +27,20 @@ const Market = () => {
           {/* segmented control */}
           <div className="segmented-control">
             <span
-              className={`text-4 ${activeTab === 'active' ? 'active' : ''}`}
-              onClick={() => handleTabClick('active')}
+              className={`text-4 ${activeControl === 'active' ? 'active' : ''}`}
+              onClick={() => handleSegmentedControlClick('active')}
             >
               Active
             </span>
             <span
-              className={`text-4 ${activeTab === 'inactive' ? 'active' : ''}`}
-              onClick={() => handleTabClick('inactive')}
+              className={`text-4 ${activeControl === 'inactive' ? 'active' : ''}`}
+              onClick={() => handleSegmentedControlClick('inactive')}
             >
               Inactive
             </span>
           </div>
-          <PoolCard title="PT tsTON" value="15.61" tvl="$1000" maturity="27 Jun 2024" daysToMaturity="100" />
-          <PoolCard title="YT tsTON" value="15.21" tvl="$2000" maturity="27 Jun 2024" daysToMaturity="80" />
+          <PoolCard type="pt" title="PT tsTON" value="15.61" tvl="$1000" maturity="27 Jun 2024" daysToMaturity="100" />
+          <PoolCard type="yt" title="YT tsTON" value="15.21" tvl="$2000" maturity="27 Jun 2024" daysToMaturity="80" />
         </div>
       </div>
     </>
@@ -47,21 +48,29 @@ const Market = () => {
 };
 
 export function PoolCard({
+  type,
   title,
   value,
   tvl,
   maturity,
   daysToMaturity,
 }: {
+  type: PoolsDetailsProps['type'];
   title: string;
   value: string;
   tvl: string;
   maturity: string;
   daysToMaturity: string;
 }) {
+  const handleCardClick = (type: PoolsDetailsProps['type']) => {
+    console.log(type);
+    // Navigate to another URL
+    window.location.href = '/pools/details/' + type;
+  };
+
   return (
-    <div className="flex flex-col gap-2">
-      <div className="pool-card gap-3">
+    <>
+      <div className="pool-card gap-3" onClick={() => handleCardClick(type)}>
         <div className="flex flex-row justify-between w-full">
           <div>
             <div className="text-1">{title}</div>
@@ -83,8 +92,8 @@ export function PoolCard({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
-export default Market;
+export default Pools;
