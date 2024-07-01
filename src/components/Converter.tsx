@@ -132,6 +132,8 @@ const Converter = () => {
         <SegmentedControlButton
           state1="mint"
           state2="redeem"
+          label1="Mint"
+          label2="Redeem"
           onChange={function (value: string): void {
             setActiveTab(value);
           }}
