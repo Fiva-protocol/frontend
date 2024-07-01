@@ -5,9 +5,11 @@ import { redeem } from '../api/redeem';
 import { useJettonMinter } from '../hooks/useJettonMinter';
 import { useConctractMaster } from '../hooks/useConctractMaster';
 
-interface MintProps {}
+interface MintProps {
+    inputValue: string;
+}
 
-const RedeemFiva: FC<MintProps> = ({}) => {
+const RedeemFiva: FC<MintProps> = ({ inputValue }) => {
     const masterAddress = Address.parse('EQAHmEAgPST8XV4GN6r6E4NesuLs7lDbzsSW1ougMxItut9S');
     const yieldMinterAddress = Address.parse('EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW');
     const principleMinterAddress = Address.parse('EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK');
@@ -26,7 +28,7 @@ const RedeemFiva: FC<MintProps> = ({}) => {
     
     console.log(contractAddress?.toString());
 
-    const [inputValue, setInputValue] = useState<string>('');  // State to manage user input
+    // const [inputValue, setInputValue] = useState<string>('');  // State to manage user input
 
     const onClickFirst = async () => {
         if (userAddress) {
@@ -75,27 +77,9 @@ const RedeemFiva: FC<MintProps> = ({}) => {
     };
 
     return (
-        <div className="flex flex-col my-10 mx-5">
-            <h1 className="text-2xl mb-2">Redeem testnet PT/YT tokens</h1>
-            <input
-                type="text"
-                placeholder="Enter amount"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}  // Update state on input change
-                className="mb-4 p-2 border border-gray-300 rounded"
-            />
-            <button
-                onClick={onClickFirst}
-                className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-            >
-                Redeem {inputValue || 0} YT tsTON  {/* Display user input or default value */}
-            </button>
-            <button
-                onClick={onClickSecond}
-                className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-            >
-                Redeem {inputValue || 0} PT tsTON  {/* Display user input or default value */}
-            </button>
+        <div>
+            <button onClick={onClickFirst} className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Redeem YT</button>
+            <button onClick={onClickSecond} className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Redeem PT</button>
         </div>
     );
 };
