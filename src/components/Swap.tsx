@@ -129,7 +129,7 @@ const Swap: React.FC = () => {
         const tsTONWallet = tonClient.open(await tsTONRoot.getWallet(Address.parse(userAddress)));
 
         try {
-          await tsTONWallet.sendTransfer(sender, toNano(amountIn), {
+          await tsTONWallet.sendTransfer(sender, toNano('0.3'), {
             amount: toNano(amountIn),
             destination: tsTONVault.address,
             responseAddress: Address.parse(userAddress), // return gas to user
@@ -146,7 +146,7 @@ const Swap: React.FC = () => {
         const ptWallet = tonClient.open(await ptRoot.getWallet(Address.parse(userAddress)));
 
         try {
-          await ptWallet.sendTransfer(sender, toNano(amountIn), {
+          await ptWallet.sendTransfer(sender, toNano('0.3'), {
             amount: toNano(amountIn),
             destination: ptVault.address,
             responseAddress: Address.parse(userAddress), // return gas to user
