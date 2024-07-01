@@ -24,7 +24,7 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
   };
 
   return (
-    <>
+    <div>
       <div className="flex flex-row justify-between">
         <label className="flex pb-1">{label1}</label>
         <label className="flex pb-1">{label2}</label>
@@ -43,7 +43,7 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
 
         <input className="half-input-right w-1/2" value={value} onChange={handleInputChange}></input>
       </div>
-    </>
+    </div>
   );
 };
 

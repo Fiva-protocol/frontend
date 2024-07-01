@@ -4,6 +4,9 @@ import './Converter.css';
 import './CommonButton.css';
 import tsTonIcon from '../assets/icons/tsTonIcon.svg';
 import downArrow from '../assets/icons/downArrow.svg';
+import DoubleInput from './shared/double-input/DoubleInput';
+import CircleIcon from './shared/circle-icon/CircleIcon';
+import SegmentedControlButton from './shared/segmented-control/SegmentedControlButton';
 
 const Converter = () => {
   const [activeTab, setActiveTab] = useState('mint');
@@ -11,108 +14,131 @@ const Converter = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'mint':
-        return (
-          <div className="converter-section">
-            <h1>Mint your Tokens</h1>
-            <p>Mint SY tokens back into their corresponding.</p>
-            <br></br>
-            <div className="input-group">
-              <label>Input Balance: 0</label>
-              <div className="input-row">
-                <select className="input-select">
-                  <option value="tsTon">tsTON</option>
-                  {/* Add other options here */}
-                </select>
-                <input type="number" placeholder="0" className="input-number" />
-              </div>
-            </div>
-            <div className="swap-icon">
-              <img src={downArrow} alt="Swap" />
-            </div>
-            <div className="output-group">
-              <div className="input-row">
-                <div className="output-label">
-                  <span><img src={tsTonIcon} alt="PT tsTON" />PT tsTON</span>
-                  <span>25 Jul 2024</span>
-                </div>
-                <input type="number" placeholder="0" className="input-number" />
-              </div>
-              <div className="input-row">
-                <div className="output-label">
-                  <span><img src={tsTonIcon} alt="YT tsTON" />YT tsTON</span>
-                  <span>25 Jul 2024</span>
-                </div>
-                <input type="number" placeholder="0" className="input-number" />
-              </div>
-            </div>
-            <button className="button">Mint</button>
-          </div>
-        );
+        return <MintTokensTab />;
       case 'redeem':
-        return (
-          <div className="converter-section">
-            <h1>Redeem your Tokens</h1>
-            <p>Redeem SY tokens back into their corresponding.</p>
-            <br></br>
-            <div className="input-group">
-              <label>Input        Balance: 0</label>
-              <div className="input-row">
-                <div className="output-label">
-                  <span><img src={tsTonIcon} alt="PT tsTON" />PT tsTON</span>
-                  <span>25 Jul 2024</span>
-                </div>
-                <input type="number" placeholder="0" className="input-number" />
-              </div>
-              <label>Balance: 0</label>
-              <div className="input-row">
-                <div className="output-label">
-                  <span><img src={tsTonIcon} alt="YT tsTON" />YT tsTON</span>
-                  <span>25 Jul 2024</span>
-                </div>
-                <input type="number" placeholder="0" className="input-number" />
-              </div>
-            </div>
-            <div className="swap-icon">
-              <img src={downArrow} alt="Swap" />
-            </div>
-            <div className="output-group">
-              <label>Output</label>
-              <div className="input-row">
-                <select className="input-select">
-                  <option value="tsTon">tsTON</option>
-                  {/* Add other options here */}
-                </select>
-                <input type="number" placeholder="0" className="input-number" />
-              </div>
-            </div>
-            <button className="button">Redeem</button>
-          </div>
-        );
+        return <ReedemTokensTab />;
       default:
         return null;
     }
   };
 
-  return (
-    <div className="converter-page">
-      <div className="converter-content">
-        <div className="tabs">
-          <button
-            className={`tab ${activeTab === 'mint' ? 'active' : ''}`}
-            onClick={() => setActiveTab('mint')}
-          >
-            Mint
-          </button>
-          <button
-            className={`tab ${activeTab === 'redeem' ? 'active' : ''}`}
-            onClick={() => setActiveTab('redeem')}
-          >
-            Redeem
-          </button>
+  const MintTokensTab = () => {
+    return (
+      <>
+        <DoubleInput
+          iconPathInputLeft={tsTonIcon}
+          label1InputLeft="tsTON"
+          label2InputLeft="Tonstakers"
+          label1={'Input'}
+          label2={'Balance: 0'}
+          value={'0'}
+          onChange={function (value: string): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+
+        <CircleIcon iconPath={downArrow} />
+
+        <div className="flex flex-col gap-4">
+          <DoubleInput
+            iconPathInputLeft={tsTonIcon}
+            label1InputLeft="tsTON"
+            label2InputLeft="Tonstakers"
+            label1={'Output'}
+            label2={''}
+            value={'0'}
+            onChange={function (value: string): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+
+          <DoubleInput
+            iconPathInputLeft={tsTonIcon}
+            label1InputLeft="tsTON"
+            label2InputLeft="Tonstakers"
+            label1={''}
+            label2={''}
+            value={'0'}
+            onChange={function (value: string): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
         </div>
+
+        <button className="button">Mint</button>
+      </>
+    );
+  };
+
+  const ReedemTokensTab = () => {
+    return (
+      <>
+        <div className="flex flex-col gap-4">
+          <DoubleInput
+            iconPathInputLeft={tsTonIcon}
+            label1InputLeft="tsTON"
+            label2InputLeft="Tonstakers"
+            label1={'Input'}
+            label2={'Balance: 0'}
+            value={'0'}
+            onChange={function (value: string): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+
+          <DoubleInput
+            iconPathInputLeft={tsTonIcon}
+            label1InputLeft="tsTON"
+            label2InputLeft="Tonstakers"
+            label1={''}
+            label2={'Balance: 0'}
+            value={'0'}
+            onChange={function (value: string): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        </div>
+
+        <CircleIcon iconPath={downArrow} />
+
+        <DoubleInput
+          iconPathInputLeft={tsTonIcon}
+          label1InputLeft="tsTON"
+          label2InputLeft="Tonstakers"
+          label1={'Output'}
+          label2={''}
+          value={'0'}
+          onChange={function (value: string): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
+
+        <button className="button">Redeem</button>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <div className="container mx-auto px-6 py-8 flex flex-col gap-6">
+        <div className="flex flex-col items-start">
+          <h1>{activeTab === 'mint' ? 'Mint Liquidity Pools' : 'Redeem Liquidity Pools'}</h1>
+          <div className="text-3">
+            {activeTab === 'mint'
+              ? 'Mint SY tokens back into their corresponding.'
+              : 'Redeem SY tokens back into their corresponding.'}{' '}
+          </div>
+        </div>
+        <SegmentedControlButton
+          state1="mint"
+          state2="redeem"
+          onChange={function (value: string): void {
+            setActiveTab(value);
+          }}
+        />
         {renderTabContent()}
       </div>
-    </div>
+    </>
   );
 };
 
