@@ -107,6 +107,60 @@ const Swap: React.FC = () => {
     };
   };
 
+  const handleSwapClickYT = async () => {
+    if (userAddress && tonClient && amountIn) {
+        const sender = createSender();
+
+        const tsTON = Asset.jetton(Address.parse(tsTONAddress));
+        const YT = Asset.jetton(Address.parse(YTAddress));
+
+        const factory = tonClient.open(Factory.createFromAddress(FACTORY_TESTNET_ADDR));
+        const pool = tonClient.open(await factory.getPool(PoolType.VOLATILE, [tsTON, YT]));
+
+        if ((await pool.getReadinessStatus()) !== ReadinessStatus.READY) {
+            throw new Error('Pool (tsTON, YT) does not exist.');
+        }
+
+        // const amountIn = toNano(swapAmount); // Convert input to Nano
+
+        if (activeSubTab === 'buy') {
+            const tsTONVault = tonClient.open(await factory.getJettonVault(Address.parse(tsTONAddress)));
+            const tsTONRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(tsTONAddress)));
+            const tsTONWallet = tonClient.open(await tsTONRoot.getWallet(Address.parse(userAddress)));
+
+            try {
+                await tsTONWallet.sendTransfer(sender, toNano('0.3'), {
+                    amount: toNano(amountIn),
+                    destination: tsTONVault.address,
+                    responseAddress: Address.parse(userAddress), // return gas to user
+                    forwardAmount: toNano('0.25'),
+                    forwardPayload: VaultJetton.createSwapPayload({ poolAddress }),
+                });
+                console.log('Swap transaction successfully sent');
+            } catch (error) {
+                console.error('Error in swap transaction:', error);
+            }
+        } else {
+            const ytVault = tonClient.open(await factory.getJettonVault(Address.parse(YTAddress)));
+            const ytRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(YTAddress)));
+            const ytWallet = tonClient.open(await ytRoot.getWallet(Address.parse(userAddress)));
+
+            try {
+                await ytWallet.sendTransfer(sender, toNano('0.3'), {
+                    amount: toNano(amountIn),
+                    destination: ytVault.address,
+                    responseAddress: Address.parse(userAddress), // return gas to user
+                    forwardAmount: toNano('0.25'),
+                    forwardPayload: VaultJetton.createSwapPayload({ poolAddress }),
+                });
+                console.log('Swap transaction successfully sent');
+            } catch (error) {
+                console.error('Error in swap transaction:', error);
+            }
+        }
+    }
+};
+
   const handleSwapClickPT = async () => {
     if (userAddress && tonClient && amountIn) {
       const sender = createSender();
@@ -232,7 +286,7 @@ const Swap: React.FC = () => {
         </div>
 
         {userAddress ? (
-          <button onClick={handleSwapClickPT} className="button">
+          <button onClick={activeTab ==='PT' ? handleSwapClickPT : handleSwapClickYT} className="button">
             {activeSubTab === 'buy' ? `Buy ${activeTab}` : `Sell ${activeTab}`}
           </button>
         ) : (
