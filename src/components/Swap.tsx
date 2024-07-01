@@ -17,6 +17,7 @@ const PTAddress = 'EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK';
 const YTAddress = 'EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW';
 const FACTORY_TESTNET_ADDR = Address.parse('EQDHcPxlCOSN_s-Vlw53bFpibNyKpZHV6xHhxGAAT_21nCFU');
 const poolAddressPT = Address.parse('EQDJX39iVmy_pqeYjO47vdT7rYNiYYGzf8f_5duv-4vuYoDW');
+const poolAddressYT = Address.parse('EQD-7e2KmGadNWp0-QdpTJAkpzBKC9E3e1-zG6Y6_tVzuSwM');
 
 const Swap: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'YT' | 'PT'>('YT');
@@ -134,7 +135,7 @@ const Swap: React.FC = () => {
                     destination: tsTONVault.address,
                     responseAddress: Address.parse(userAddress), // return gas to user
                     forwardAmount: toNano('0.25'),
-                    forwardPayload: VaultJetton.createSwapPayload({ poolAddress }),
+                    forwardPayload: VaultJetton.createSwapPayload({ poolAddressYT }),
                 });
                 console.log('Swap transaction successfully sent');
             } catch (error) {
@@ -151,7 +152,7 @@ const Swap: React.FC = () => {
                     destination: ytVault.address,
                     responseAddress: Address.parse(userAddress), // return gas to user
                     forwardAmount: toNano('0.25'),
-                    forwardPayload: VaultJetton.createSwapPayload({ poolAddress }),
+                    forwardPayload: VaultJetton.createSwapPayload({ poolAddressYT }),
                 });
                 console.log('Swap transaction successfully sent');
             } catch (error) {
