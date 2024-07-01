@@ -40,10 +40,14 @@ const AppRoutes: React.FC = () => {
         <Header />
         <div className="container flex-grow mx-auto w-12/12 md:w-5/12 pb-20">
           <Routes>
-          <Route
-                    path="*"
-                    element={<><PageNotFound /></>}
-                />
+            <Route
+              path="*"
+              element={
+                <>
+                  <PageNotFound />
+                </>
+              }
+            />
             <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
             <Route
               path="/dashboard"
@@ -80,6 +84,14 @@ const AppRoutes: React.FC = () => {
               }
             />
             <Route
+              path="/swap"
+              element={
+                <>
+                  <Swap />
+                </>
+              }
+            />
+            <Route
               path="/swap/pt"
               element={
                 <>
@@ -88,13 +100,14 @@ const AppRoutes: React.FC = () => {
               }
             />
             <Route
-              path="/swap"
+              path="/swap/yt"
               element={
                 <>
                   <Swap />
                 </>
               }
             />
+
             <Route
               path="/converter"
               element={

@@ -42,7 +42,7 @@ const Market: React.FC = () => {
           <span className="info-value">18.67%</span>
         </div>
       </div>
-      <div className="market-subdetails" onClick={() => handleNavigation('/swap')} style={{ cursor: 'pointer' }}>
+      <div className="market-subdetails" onClick={() => handleNavigation('/swap/yt')} style={{ cursor: 'pointer' }}>
         <div className="market-subdetail">
           <img src={ytIcon} alt="YT Icon" className="subdetail-icon" />
           <div className="subdetail-info">

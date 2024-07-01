@@ -6,6 +6,7 @@ import downArrow from '../assets/icons/downArrow.svg';
 import DoubleInput from './shared/double-input/DoubleInput';
 import CircleIcon from './shared/circle-icon/CircleIcon';
 import SegmentedControlButton from './shared/segmented-control/SegmentedControlButton';
+import { useTonAddress } from '@tonconnect/ui-react';
 
 enum Tab {
   Mint = 'mint',

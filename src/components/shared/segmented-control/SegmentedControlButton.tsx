@@ -5,7 +5,7 @@ interface SegmentedControlButtonProps {
   state2: string;
   label1: string;
   label2: string;
-  onChange: (value: string) => void;
+  onChange: (value) => void;
 }
 
 const SegmentedControlButton: FC<SegmentedControlButtonProps> = ({ state1, state2, label1, label2, onChange }) => {
