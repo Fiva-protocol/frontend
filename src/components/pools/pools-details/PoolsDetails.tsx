@@ -6,6 +6,8 @@ import plus from '../../../assets/icons/plus.svg';
 import CircleIcon from '../../shared/circle-icon/CircleIcon';
 import downArrow from '../../../assets/icons/downArrow.svg';
 import tsTonIcon from '../../../assets/icons/tsTonIcon.svg';
+import PercentageSlider from '../../shared/percentage-slider/PercentageSlider';
+import Switch from '../../shared/switch/Switch';
 
 export interface PoolsDetailsProps {
   type: 'pt' | 'yt';
@@ -123,7 +125,7 @@ export function LiquidityAddView(type: PoolsDetailsProps['type']) {
 
 export function LiquidityRemoveView(type: PoolsDetailsProps['type']) {
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           <div>
             <DoubleInput
               iconPathInputLeft={tsTonIcon}
@@ -137,6 +139,8 @@ export function LiquidityRemoveView(type: PoolsDetailsProps['type']) {
               }}
             />
           </div>
+          <PercentageSlider />
+          <Switch />
           <CircleIcon iconPath={downArrow} />
           <div>
             <DoubleInput
