@@ -6,10 +6,14 @@ import { claim } from '../utils/claim';
 
 export const useClaimTokens = () => {
   const [tonConnectUI] = useTonConnectUI();
-  const userAddress = useTonAddress();
 
   const jettonMinterAddress = Address.parse('kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf');
-  const { jettonWalletAddress } = useJettonMinter(jettonMinterAddress, Address.parse(userAddress));
+  const userAddress = useTonAddress();
+
+  const { jettonWalletAddress } = useJettonMinter(
+    jettonMinterAddress,
+    Address.parse(userAddress ? userAddress : 'kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf')
+  );
 
   const masterAddress = Address.parse('EQAHmEAgPST8XV4GN6r6E4NesuLs7lDbzsSW1ougMxItut9S');
   const tsTONAddress = Address.parse('kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf');
