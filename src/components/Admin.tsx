@@ -2,7 +2,7 @@ import { THEME, TonConnectUIProvider } from '@tonconnect/ui-react';
 import '../App.css';
 import Header from './Header';
 import Mint from './Mint';
-import MintFiva from './MintYTPT';
+import MintFiva from './converter/MintYTPT';
 
 function Admin() {
     return (

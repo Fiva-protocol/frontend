@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { Address, toNano } from '@ton/core';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import { redeem } from '../api/redeem';
-import { useJettonMinter } from '../hooks/useJettonMinter';
-import { useConctractMaster } from '../hooks/useConctractMaster';
+import { redeem } from '../../api/redeem';
+import { useJettonMinter } from '../../hooks/useJettonMinter';
+import { useConctractMaster } from '../../hooks/useConctractMaster';
 
 interface MintProps {
     inputValue: string;
@@ -77,9 +77,9 @@ const RedeemFiva: FC<MintProps> = ({ inputValue }) => {
     };
 
     return (
-        <div>
-            <button onClick={onClickFirst} className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Redeem YT</button>
-            <button onClick={onClickSecond} className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Redeem PT</button>
+        <div className="flex flex-row gap-4">
+            <button onClick={onClickFirst} className="button">Redeem YT</button>
+            <button onClick={onClickSecond} className="button">Redeem PT</button>
         </div>
     );
 };

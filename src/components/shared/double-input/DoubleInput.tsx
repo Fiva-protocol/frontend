@@ -8,8 +8,8 @@ interface DoubleInputProps {
   label2InputLeft: string;
   isReadOnly: boolean, // Update the type to boolean
   inputType: string,
-  value: string;
-  onChange: (value: string) => void;
+  value: string | number;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const DoubleInput: React.FC<DoubleInputProps> = ({

@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Address, toNano } from '@ton/core';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import { MintPTYT } from '../api/mintPTYT';
-import { useJettonMinter } from '../hooks/useJettonMinter';
+import { MintPTYT } from '../../api/mintPTYT';
+import { useJettonMinter } from '../../hooks/useJettonMinter';
 
 interface MintProps {
     inputValue: number;
@@ -41,14 +41,13 @@ const MintFiva: FC<MintProps> = ({ inputValue }) => {
     };
 
     return (
-        <div className="flex flex-col my-10 mx-5">
+
             <button
                 onClick={onClick}
-                className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                className="button"
             >
                 Mint {inputValue || 10} PT/YT tsTON  {/* Отображаем ввод пользователя или значение по умолчанию */}
             </button>
-        </div>
     );
 };
 
