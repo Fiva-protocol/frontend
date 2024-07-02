@@ -19,14 +19,14 @@ const Mint: FC<MintProps> = ({}) => {
     };
 
     return (
-        <div className="flex flex-col my-10 mx-5">
+   
             <button
                 onClick={onClick}
                 className="button"
             >
-                Get test tokens
+                Get Test Tokens
             </button>
-        </div>
+     
     );
 };
 

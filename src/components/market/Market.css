@@ -57,7 +57,7 @@
 }
 
 .market-subdetails {
-  background: #252525;
+  background: #232336;
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -65,7 +65,7 @@
 }
 
 .market-subdetails:hover {
-  background: #333;
+  background: #232315;
 }
 
 .market-subdetail {

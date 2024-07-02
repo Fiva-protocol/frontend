@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate } from 'r
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 import TestTokens from './components/TestTokens';
-import Market from './components/Market';
+import Market from './components/market/Market';
 import Swap from './components/swap/Swap';
 import Converter from './components/Converter';
 import Onboarding from './components/Onboarding';
