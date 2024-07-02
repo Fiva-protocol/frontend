@@ -1,19 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Dashboard.css';
-import ptIcon from '../../assets/icons/ptIcon.svg';
-import ytIcon from '../../assets/icons/ytIcon.svg';
 import lpIcon from '../../assets/icons/lpIcon.svg';
-import infoIcon from '../../assets/icons/infoIcon.svg';
 import { useTonAddress } from '@tonconnect/ui-react';
+import { useJettonBalance } from '../../hooks/useJettonBalance';
+import { useLPBalance } from '../../hooks/pools/useLPBalance';
+import { Address, fromNano } from '@ton/core';
+import usePtUsdtPrice from '../../hooks/TVL/usePtUsdtPrice';
+import useYtUsdtPrice from '../../hooks/TVL/useYtUsdtPrice ';
+import logo from '../../assets/icons/tokenLogo.svg';
+import { useImpliedApy } from '../../hooks/useImpliedAPY';
+import { useClaimTokens } from '../../hooks/useClaimTokens';  // Import the custom hook
+
+
 
 const Dashboard: React.FC = () => {
-  // const [activeSubTab, setActiveSubTab] = useState<'All Assets' | 'PT' | 'YT' | 'LP'>('All Assets');
   const address = useTonAddress();
 
-  // const handleSubTabClick = (subTab: 'All Assets' | 'PT' | 'YT' | 'LP') => {
-  //   setActiveSubTab(subTab);
-  // };
+  const ptBalance = useJettonBalance(Address.parse('EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK'));
+  const ytBalance = useJettonBalance(Address.parse('EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW'));
+  const pTLPBalance = useLPBalance('kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf', 'EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK');
+  const YTLPBalance = useLPBalance('kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf', 'EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW');
 
+
+  const ptResults = usePtUsdtPrice();
+  const ptRate = ptResults.ptPrice || 0;
+  const ytResults = useYtUsdtPrice();
+  const ytRate = ytResults.ytPrice || 0;
+
+  const ptBalanceUSD = ptBalance ? Number(fromNano(ptBalance)) * ptRate : 0;
+  const ytBalanceUSD = ytBalance ? Number(fromNano(ytBalance)) * ytRate : 0;
+
+  const formattedPTLPBalance = pTLPBalance ? Number(fromNano(pTLPBalance)) : 0;
+  const formattedYTLPBalance = YTLPBalance ? Number(fromNano(YTLPBalance)) : 0;
+
+  const impliedResults = useImpliedApy();
+  const impliedAPY = impliedResults?.impliedApy || 0;
+  const formattedImpliedAPY = (impliedAPY * 100).toFixed(2) + '%';
+
+  const totalBalance = (ptBalanceUSD + ytBalanceUSD).toFixed(2);
+  const totalLPBalance = (formattedPTLPBalance + formattedYTLPBalance).toFixed(2);
+
+  const {claimTokens} = useClaimTokens();
+
+  // const ptBalanceUSD = (Number(fromNano(ptBalance!)) * ptRate!).toFixed(2)
+  // const ytBalanceUSD = Number(ytBalance!) * ytRate! 
   const formatAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-5)}`;
   };
@@ -41,7 +71,7 @@ const Dashboard: React.FC = () => {
               </svg>
               My Current Balance
             </div>
-            <div>$0.00</div>
+            <div>$ {totalBalance}</div>
           </div>
           <div className="flex flex-row justify-between">
             <div className="flex flex-row gap-2">
@@ -53,23 +83,9 @@ const Dashboard: React.FC = () => {
                   stroke-linejoin="round"
                 />
               </svg>
-              My Net P&L
+              My LP Balance
             </div>
-            <div>$0.00</div>
-          </div>
-          <div className="flex flex-row justify-between">
-            <div className="flex flex-row gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 4V21M7.5 17.0078L8.8185 17.9414C10.575 19.1867 13.4235 19.1867 15.1815 17.9414C16.9395 16.6962 16.9395 14.6788 15.1815 13.4336C14.304 12.8103 13.152 12.5 12 12.5C10.9125 12.5 9.825 12.1883 8.9955 11.5664C7.3365 10.3212 7.3365 8.30383 8.9955 7.05858C10.6545 5.81333 13.3455 5.81333 15.0045 7.05858L15.627 7.52608"
-                  stroke="#C9C9C9"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              My Total Capital
-            </div>
-            <div>$0.00</div>
+            <div>LP {totalLPBalance}</div>
           </div>
           <div className="flex flex-row justify-between">
             <div className="flex flex-row gap-2">
@@ -87,28 +103,28 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <button className="button">Claim Yield & Rewards</button>
+        <button className="button"  onClick={claimTokens}>Claim Yield & Rewards</button>
 
         <div className="flex flex-col gap-2">
           <div className="flex w-full justify-between market-subdetails px-5">
             <div className="market-subdetail flex w-full justify-between">
-              <img src={ytIcon} alt="YT Icon" className="subdetail-icon" />
+              <img src={logo} alt="YT Icon" className="subdetail-icon" />
               <div className="subdetail-info flex flex-col">
-                <span className="subdetail-value">Balance</span>
-                <span className="text-4">APY</span>
+                <span className="subdetail-value">YT tsTON</span>
+                {/* <span className="text-4">APY</span> */}
               </div>
-              <span className="subdetail-value">$0.00</span>
+              <span className="subdetail-value">$ {(ytBalanceUSD).toFixed(2)}</span>
             </div>
           </div>
 
           <div className="flex w-full justify-between market-subdetails px-5">
             <div className="market-subdetail flex w-full justify-between ">
-              <img src={ptIcon} alt="PT Icon" className="subdetail-icon" />
+              <img src={logo} alt="PT Icon" className="subdetail-icon" />
               <div className="subdetail-info  flex flex-col">
-                <span className="subdetail-value">Balance</span>
-                <span className="text-4">APY</span>
+                <span className="subdetail-value">PT tsTON</span>
+                <span className="text-4">APY {formattedImpliedAPY}</span>
               </div>
-              <span className="subdetail-value">$0.00</span>
+              <span className="subdetail-value">$ {(ptBalanceUSD).toFixed(2)}</span>
             </div>
           </div>
 
@@ -116,164 +132,24 @@ const Dashboard: React.FC = () => {
             <div className="market-subdetail flex w-full justify-between">
               <img src={lpIcon} alt="LP Icon" className="subdetail-icon" />
               <div className="subdetail-info  flex flex-col">
-                <span className="subdetail-value">Balance</span>
-                <span className="text-4">APY</span>
+                <span className="subdetail-value"> LP PT </span>
               </div>
-              <span className="subdetail-value">$0.00</span>
+              <span className="subdetail-value">LP {(formattedPTLPBalance).toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div className="flex w-full justify-between market-subdetails px-5">
+            <div className="market-subdetail flex w-full justify-between">
+              <img src={lpIcon} alt="LP Icon" className="subdetail-icon" />
+              <div className="subdetail-info  flex flex-col">
+                <span className="subdetail-value">LP YT</span>
+              </div>
+              <span className="subdetail-value">LP {(formattedYTLPBalance).toFixed(2)}</span>
             </div>
           </div>
         </div>
 
-        {/* <div>
-          <div className="asset-item">
-            <div className="asset-info">
-              <img src={ptIcon} alt="PT" />
-              <div className="asset-details">
-                <span className="asset-balance">PT balance</span>
-                <span className="asset-apy">APY 18.67%</span>
-              </div>
-            </div>
-            <span className="info-value">$0.00</span>
-          </div>
-          <div className="asset-item">
-            <div className="asset-info">
-              <img src={ytIcon} alt="YT" />
-              <div className="asset-details">
-                <span className="asset-balance">YT balance</span>
-                <span className="asset-apy">APY 18.67%</span>
-              </div>
-            </div>
-            <span className="info-value">$0.00</span>
-          </div>
-          <div className="asset-item">
-            <div className="asset-info">
-              <img src={lpIcon} alt="LP" />
-              <div className="asset-details">
-                <span className="asset-balance">LP balance</span>
-                <span className="asset-apy">APY 18.67%</span>
-              </div>
-            </div>
-            <span className="info-value">$0.00</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="dashboard">
-        <div className="dashboard-header">
-          <div>
-            <h1>My Dashboard</h1>
-            <p>{address ? formatAddress(address) : 'Connect wallet'}</p>
-          </div>
-        </div>
-        <div className="dashboard-info">
-          <div className="info-item">
-            <span>$ My Current Balance</span>
-            <span className="info-value">$0.00</span>
-          </div>
-          <div className="info-item">
-            <span>$ My Net P&L</span>
-            <span className="info-value">$0.00</span>
-          </div>
-          <div className="info-item">
-            <span>$ My Total Capital</span>
-            <img src={infoIcon} alt="info" className="info-icon" />
-            <span className="info-value">$0.00</span>
-          </div>
-          <div className="info-item">
-            <span>$ My Claimable Yield</span>
-            <span className="info-value">$0.00</span>
-          </div>
-          <button className="common-button">Claim Yield & Rewards</button>
-        </div>
-        <div className="sub-tabs">
-          <button
-            className={activeSubTab === 'All Assets' ? 'active' : ''}
-            onClick={() => handleSubTabClick('All Assets')}
-          >
-            All Assets
-          </button>
-          <button className={activeSubTab === 'PT' ? 'active' : ''} onClick={() => handleSubTabClick('PT')}>
-            PT
-          </button>
-          <button className={activeSubTab === 'YT' ? 'active' : ''} onClick={() => handleSubTabClick('YT')}>
-            YT
-          </button>
-          <button className={activeSubTab === 'LP' ? 'active' : ''} onClick={() => handleSubTabClick('LP')}>
-            LP
-          </button>
-        </div>
-        <div className="positions-content">
-          {activeSubTab === 'All Assets' && (
-            <div>
-              <div className="asset-item">
-                <div className="asset-info">
-                  <img src={ptIcon} alt="PT" />
-                  <div className="asset-details">
-                    <span className="asset-balance">PT balance</span>
-                    <span className="asset-apy">APY 18.67%</span>
-                  </div>
-                </div>
-                <span className="info-value">$0.00</span>
-              </div>
-              <div className="asset-item">
-                <div className="asset-info">
-                  <img src={ytIcon} alt="YT" />
-                  <div className="asset-details">
-                    <span className="asset-balance">YT balance</span>
-                    <span className="asset-apy">APY 18.67%</span>
-                  </div>
-                </div>
-                <span className="info-value">$0.00</span>
-              </div>
-              <div className="asset-item">
-                <div className="asset-info">
-                  <img src={lpIcon} alt="LP" />
-                  <div className="asset-details">
-                    <span className="asset-balance">LP balance</span>
-                    <span className="asset-apy">APY 18.67%</span>
-                  </div>
-                </div>
-                <span className="info-value">$0.00</span>
-              </div>
-            </div>
-          )}
-          {activeSubTab === 'PT' && (
-            <div className="asset-item">
-              <div className="asset-info">
-                <img src={ptIcon} alt="PT" />
-                <div className="asset-details">
-                  <span className="asset-balance">PT balance</span>
-                  <span className="asset-apy">APY 18.67%</span>
-                </div>
-              </div>
-              <span className="info-value">$0.00</span>
-            </div>
-          )}
-          {activeSubTab === 'YT' && (
-            <div className="asset-item">
-              <div className="asset-info">
-                <img src={ytIcon} alt="YT" />
-                <div className="asset-details">
-                  <span className="asset-balance">YT balance</span>
-                  <span className="asset-apy">APY 18.67%</span>
-                </div>
-              </div>
-              <span className="info-value">$0.00</span>
-            </div>
-          )}
-          {activeSubTab === 'LP' && (
-            <div className="asset-item">
-              <div className="asset-info">
-                <img src={lpIcon} alt="LP" />
-                <div className="asset-details">
-                  <span className="asset-balance">LP balance - $0</span>
-                  <span className="asset-apy">APY 18.67%</span>
-                </div>
-              </div>
-              <span className="info-value">$0.00</span>
-            </div>
-          )}
-        </div> */}
+     
       </div>
     </>
   );
