@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Master } from "../../contracts/Master";
-import { useTonClient } from "../useTonClient";
-import { useAsyncInitialize } from "../useAsyncInitialize";
+import { Master } from "../contracts/Master";
+import { useTonClient } from "./useTonClient";
+import { useAsyncInitialize } from "./useAsyncInitialize";
 import { Address, OpenedContract } from "@ton/core";
 
 export function useFivaData() {

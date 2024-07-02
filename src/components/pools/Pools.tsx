@@ -4,10 +4,11 @@ import tsTonIcon from '../../assets/icons/tsTonIcon.svg';
 import { PoolsDetailsProps } from './pools-details/PoolsDetails';
 import { calculateDaysToMaturity } from '../../utils/dateCalc';
 import { useTvlCalculation } from '../../hooks/TVL/useTvlCalculation';
-
+import { useFivaData } from '../../hooks/useFivaData';
 
 const Pools = () => {
   const [activeControl, setActiveControl] = useState('active');
+  const {index,date} = useFivaData();
 
   const handleSegmentedControlClick = (control: 'active' | 'inactive') => {
     setActiveControl(control);
@@ -44,8 +45,8 @@ const Pools = () => {
           </div>
           {activeControl === 'active' && (
             <>
-              <PoolCard type="pt" title="PT tsTON" maturity="31 Dec 2024" daysToMaturity={calculateDaysToMaturity('2024-12-31')} />
-              <PoolCard type="yt" title="YT tsTON" maturity="31 Dec 2024" daysToMaturity={calculateDaysToMaturity('2024-12-31')} />
+              <PoolCard type="pt" title="PT tsTON" maturity={date.toDateString()} daysToMaturity={calculateDaysToMaturity(date.toDateString())} />
+              <PoolCard type="yt" title="YT tsTON" maturity={date.toDateString()} daysToMaturity={calculateDaysToMaturity(date.toDateString())} />
             </>
           )}
           {activeControl === 'inactive' && (

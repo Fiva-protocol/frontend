@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useTonUsdtPrice from "./useTonUsdtPrice";
-import { useFivaData } from "./useFivaData";
+import { useFivaData } from "../useFivaData";
 
 export const useTsTonUsdtPrice = () => {
   const { price: tonPrice, loading: tonLoading, error: tonError } = useTonUsdtPrice();
