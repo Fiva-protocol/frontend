@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './Converter.css';
 import tsTonIcon from '../../assets/icons/tsTonIcon.svg';
+import logo from '../../assets/icons/tokenLogo.svg';
 import downArrow from '../../assets/icons/downArrow.svg';
-import DoubleInput from '../shared/double-input/DoubleInput';
 import CircleIcon from '../shared/circle-icon/CircleIcon';
-import SegmentedControlButton from '../shared/segmented-control/SegmentedControlButton';
 import { useTonAddress } from '@tonconnect/ui-react';
 import MintFiva from './MintYTPT';
 import RedeemFiva from './Redeem';
-import logo from '../../assets/icons/tokenLogo.svg';
+import { Address, fromNano } from '@ton/core';
+import { useJettonBalance } from '../../hooks/useJettonBalance';
+import { useFivaData } from '../../hooks/useFivaData';
+
 
 enum Tab {
   Mint = 'mint',
@@ -17,168 +19,279 @@ enum Tab {
 
 const Converter: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Mint);
-  const [inputValue, setInputValue] = useState<string | number>(10);
-  const [ytValue, setYtValue] = useState<number>(0);
-  const [ptValue, setPtValue] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<number>(0);
   const userAddress = useTonAddress();
-  const blockchainIndex = 1; // value from blockchain //TODO dociągać
 
-  const calculateValues = useCallback(
-    (value: number) => {
-      return {
-        tsTon: value,
-        pt: value / blockchainIndex,
-        yt: value / blockchainIndex,
-      };
-    },
-    [blockchainIndex]
-  );
 
-  // useEffect(() => {
-  //   const { pt, yt } = calculateValues(inputValue);
-  //   setPtValue(pt);
-  //   setYtValue(yt);
-  // }, [inputValue, calculateValues]);
+  // const blockchainIndex = 1;  // value from blockchain
+  const { index, date } = useFivaData();
+  console.log("index", index)
+  console.log("date", date)
+  const blockchainIndex = index ? (Number(index) / 1000) : 1;
+  console.log("blockchainIndex", blockchainIndex)
 
-  const handleInputChange = (value: any) => {
+
+
+
+  const ytBalance = useJettonBalance(Address.parse('EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW'));
+  const ptBalance = useJettonBalance(Address.parse('EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK'));
+  const tsTONBalance = useJettonBalance(Address.parse('kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf'));
+
+  const formatYtBalance = ytBalance ? Number(fromNano(ytBalance)).toFixed(2) : '0.00';
+  // console.log("ytBalance", ytBalance)
+  // console.log("ytBalance", formatYtBalance)
+  const formatPtBalance = ptBalance ? Number(fromNano(ptBalance)).toFixed(2) : '0.00';
+  // console.log("ptBalance", ptBalance)
+  // console.log("ptBalance", formatPtBalance)
+  const formatTsBalance = tsTONBalance ? Number(fromNano(tsTONBalance)).toFixed(2) : '0.00';
+  // console.log("tsBalance", tsTONBalance)
+  // console.log("tsBalance", formatTsBalance)
+  
+
+  const calculateValues = (value: number) => {
+    return {
+      tsTon: value,
+      pt: (value * blockchainIndex).toFixed(2),
+      yt: (value * blockchainIndex).toFixed(2),
+    };
+  };
+
+  const { tsTon, pt, yt } = calculateValues(inputValue);
+
+  useEffect(() => {
     const { pt, yt } = calculateValues(inputValue);
     setPtValue(pt);
     setYtValue(yt);
+  }, [inputValue]);
+
+  const [ptValue, setPtValue] = useState<number>(pt);
+  const [ytValue, setYtValue] = useState<number>(yt);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
     setInputValue(value);
   };
 
-  const calculateTSton = useCallback(
-    (value: number) => {
-      return blockchainIndex * value;
-    },
-    [blockchainIndex]
-  );
+  const calculateTSton = (value: number) => {
+    return (value / blockchainIndex).toFixed(2);
+  };
 
-  const MintTokensTab = () => (
-    <>
-      <DoubleInput
-        iconPathInputLeft={tsTonIcon}
-        label1InputLeft="tsTON"
-        label2InputLeft="Tonstakers"
-        label1="Input"
-        label2="Balance: 0"
-        value={inputValue}
-        onChange={handleInputChange}
-        inputType="number"
-        isReadOnly={false}
-      />
-
-      <CircleIcon iconPath={downArrow} />
-
-      <div className="flex flex-col gap-4">
-        <DoubleInput
-          iconPathInputLeft={logo}
-          label1InputLeft="YT tsTON"
-          label2InputLeft="Tonstakers"
-          label1="Output"
-          label2=""
-          value={ytValue}
-          inputType="number"
-          isReadOnly={true}
-        />
-
-        <DoubleInput
-          iconPathInputLeft={logo}
-          label1InputLeft="PT tsTON"
-          label2InputLeft="Tonstakers"
-          label1=""
-          label2=""
-          inputType="number"
-          value={ptValue}
-          isReadOnly={true}
-        />
-      </div>
-      {!userAddress ? (
-        <button className="connect-wallet">Connect Wallet</button>
-      ) : (
-        <MintFiva inputValue={inputValue.toString()} />
-      )}
-    </>
-  );
-
-  const RedeemTokensTab = () => (
-    <>
-      <div className="flex flex-col gap-4">
-        <DoubleInput
-          iconPathInputLeft={logo}
-          label1InputLeft="YT tsTON"
-          label2InputLeft="Tonstakers"
-          label1="Input"
-          label2="Balance: 0"
-          value={inputValue}
-          onChange={handleInputChange}
-          inputType="number"
-          isReadOnly={false}
-        />
-
-        <DoubleInput
-          iconPathInputLeft={logo}
-          label1InputLeft="PT tsTON"
-          label2InputLeft="Tonstakers"
-          label1=""
-          label2="Balance: 0"
-          value={inputValue}
-          inputType="number"
-          onChange={handleInputChange}
-          isReadOnly={false}
-        />
-      </div>
-
-      <CircleIcon iconPath={downArrow} />
-
-      <DoubleInput
-        iconPathInputLeft={tsTonIcon}
-        label1InputLeft="tsTON"
-        label2InputLeft="Tonstakers"
-        label1="Output"
-        label2=""
-        inputType="number"
-        value={calculateTSton(inputValue)}
-        isReadOnly={true}
-        onChange={()=>{}}
-      />
-      {!userAddress ? (
-        <button className="connect-wallet">Connect Wallet</button>
-      ) : (
-        <RedeemFiva inputValue={inputValue.toString()} />
-      )}
-    </>
-  );
-
-  const renderTabContent = useCallback(() => {
+  const renderTabContent = () => {
     switch (activeTab) {
       case Tab.Mint:
-        return <MintTokensTab />;
-      case Tab.Redeem:
-        return <RedeemTokensTab />;
+        return (
+          <div className="converter-section">
+            <h1>Mint your Tokens</h1>
+            <p>Mint SY tokens back into their corresponding.</p>
+                <div className="flex rounded-xl space-between" style={{ backgroundColor: '#232336' }}>
+                  <span
+                    className={`flex m-1 justify-center w-full py-2 px-4 cursor-pointer rounded-lg transition duration-200 ease-in-out
+                    }`}
+                    style={{ backgroundColor: activeTab === Tab.Mint ? '#6161D6' : '' }}
+                    onClick={() => {setActiveTab(Tab.Mint); setInputValue(0)}}
+                  >
+                    Mint
+                  </span>
+                  <span
+                    className={`flex m-1  justify-center w-full text-white text-sm py-2 px-4 cursor-pointer rounded-lg transition duration-200 ease-in-out 
+                    }`}
+                    style={{ backgroundColor: activeTab === Tab.Redeem ? '#6161D6' : '' }}
+                    onClick={() => {setActiveTab(Tab.Redeem); setInputValue(0)}}
+                  >
+                    Redeem
+                  </span>
+                </div>
+            <br></br>
+            <div className="input-group">
+              <div>
+                <div className="flex flex-row justify-between">
+                  <label className="flex pb-1">Input</label>
+                  <label className="flex pb-1">Balance: {formatTsBalance}</label>
+              </div>
+        
+              <div className="flex flex-row">
+                <div className="half-input-left w-1/2">
+                  <div className="flex flex-row items-center gap-2">
+                    <img src={tsTonIcon} alt="" />
+                      <div className="flex flex-col">
+                        <div>tsTON</div>
+                        <div className="text-4">Tonstakers</div>
+                      </div>
+                    </div>
+                </div>
+                  <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange} min="0" ></input>
+                </div>
+              </div>
+
+              
+            </div>
+            <div>
+              <CircleIcon iconPath={downArrow} />
+            </div>
+            <div className="output-group">
+            <div>
+              <div className="flex flex-row justify-between">
+                <label className="flex pb-1">Output</label>
+                <label className="flex pb-1"></label>
+              </div>
+        
+              <div className="flex flex-row">
+                <div className="half-input-left w-1/2">
+                  <div className="flex flex-row items-center gap-2">
+                    <img src={logo} alt="" />
+                      <div className="flex flex-col">
+                        <div>YT tsTON</div>
+                        <div className="text-4">Tonstakers</div>
+                      </div>
+                    </div>
+                </div>
+
+                <input  type="number" className="half-input-right w-1/2" value={ytValue} readOnly></input>
+              </div>
+            </div>
+              <div>
+                <br></br>
+              <div className="flex flex-row justify-between">
+                <label className="flex pb-1"></label>
+                <label className="flex pb-1"></label>
+              </div>
+        
+              <div className="flex flex-row">
+                <div className="half-input-left w-1/2">
+                  <div className="flex flex-row items-center gap-2">
+                    <img src={logo} alt="" />
+                      <div className="flex flex-col">
+                        <div>PT tsTON</div>
+                        <div className="text-4">Tonstakers</div>
+                      </div>
+                    </div>
+                </div>
+
+                <input  type="number" className="half-input-right w-1/2" value={ptValue} readOnly></input>
+              </div>
+            </div>
+            </div>
+            {userAddress ? (
+              <MintFiva inputValue={ytValue.toString()} />  
+            ) : (
+              <button className="button" onClick={() => {/* wallet connection info ? */}}>
+                Please connect wallet
+              </button>
+            )}
+          </div>
+        );
+        case Tab.Redeem:
+          return (
+            <div className="converter-section">
+              <h1>Redeem your Tokens</h1>
+              <p>Redeem SY tokens back into their corresponding.</p>
+              
+                <div className="flex rounded-xl space-between" style={{ backgroundColor: '#232336' }}>
+                  <span
+                    className={`flex m-1 justify-center w-full py-2 px-4 cursor-pointer rounded-lg transition duration-200 ease-in-out
+                    }`}
+                    style={{ backgroundColor: activeTab === Tab.Mint ? '#6161D6' : '' }}
+                    onClick={() => {setActiveTab(Tab.Mint); setInputValue(0)}}
+                  >
+                    Mint
+                  </span>
+                  <span
+                    className={`flex m-1 justify-center w-full py-2 px-4 cursor-pointer rounded-lg transition duration-200 ease-in-out
+                    }`}
+                    style={{ backgroundColor: activeTab === Tab.Redeem ? '#6161D6' : '' }}
+                    onClick={() => {setActiveTab(Tab.Redeem); setInputValue(0)}}
+                  >
+                    Redeem
+                  </span>
+                </div>
+              
+              <br></br>
+            <div>
+              <div className="flex flex-row justify-between">
+                <label className="flex pb-1">Input</label>
+                <label className="flex pb-1">Balance: {formatYtBalance}</label>
+              </div>
+        
+              <div className="flex flex-row">
+                <div className="half-input-left w-1/2">
+                  <div className="flex flex-row items-center gap-2">
+                    <img src={logo} alt="" />
+                      <div className="flex flex-col">
+                        <div>YT tsTON</div>
+                        <div className="text-4">Tonstakers</div>
+                      </div>
+                    </div>
+                </div>
+
+                <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange}></input>
+              </div>
+            </div>
+            <div>
+              <div className="flex flex-row justify-between">
+                <label className="flex pb-1"></label>
+                <label className="flex pb-1">Balance: <>{formatPtBalance}</></label>
+              </div>
+        
+              <div className="flex flex-row">
+                <div className="half-input-left w-1/2">
+                  <div className="flex flex-row items-center gap-2">
+                    <img src={logo} alt="" />
+                      <div className="flex flex-col">
+                        <div>PT tsTON</div>
+                        <div className="text-4">Tonstakers</div>
+                      </div>
+                    </div>
+                </div>
+
+                <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange}></input>
+              </div>
+            </div>
+              <div>
+                <br></br>
+                <CircleIcon iconPath={downArrow} />
+              </div>
+              <div>
+                <div className="flex flex-row justify-between">
+                  <label className="flex pb-1">Output</label>
+                  <label className="flex pb-1"></label>
+              </div>
+        
+              <div className="flex flex-row">
+                <div className="half-input-left w-1/2">
+                  <div className="flex flex-row items-center gap-2">
+                    <img src={tsTonIcon} alt="" />
+                      <div className="flex flex-col">
+                        <div>tsTON</div>
+                        <div className="text-4">Tonstakers</div>
+                      </div>
+                    </div>
+                </div>
+                  <input  type="number" className="half-input-right w-1/2" value={calculateTSton(inputValue)} readOnly ></input>
+                </div>
+              </div>
+              <div>
+                {!userAddress ? (
+                  <><br></br>
+                  <button className="button" onClick={() => {/* wallet connection info ? */}}>
+                  Please connect wallet
+                  </button></>
+                  ) : (
+                    <><br></br>
+                    <RedeemFiva inputValue={inputValue.toString()} /></>
+                  )}
+              </div>
+              </div>
+          );
       default:
         return null;
     }
-  }, [activeTab, inputValue, ytValue, ptValue, userAddress]);
+  };
 
   return (
-    <div className="container mx-auto px-6 py-8 flex flex-col gap-6">
-      <div className="flex flex-col items-start">
-        <h1>{activeTab === Tab.Mint ? 'Mint Liquidity Pools' : 'Redeem Liquidity Pools'}</h1>
-        <div className="text-3">
-          {activeTab === Tab.Mint
-            ? 'Mint SY tokens back into their corresponding.'
-            : 'Redeem SY tokens back into their corresponding.'}
-        </div>
+    <div className="converter-page">
+      <div className="converter-content">
+        {renderTabContent()}
       </div>
-      <SegmentedControlButton
-        state1="mint"
-        state2="redeem"
-        label1="Mint"
-        label2="Redeem"
-        onChange={(value: string) => setActiveTab(value as Tab)}
-      />
-      {renderTabContent()}
     </div>
   );
 };

@@ -46,7 +46,7 @@ const MintFiva: FC<MintProps> = ({ inputValue }) => {
                 onClick={onClick}
                 className="button"
             >
-                Mint {inputValue || 10} PT/YT tsTON  {/* Отображаем ввод пользователя или значение по умолчанию */}
+                Mint {/*{inputValue || 10} PT & {inputValue || 10} YT   Отображаем ввод пользователя или значение по умолчанию */}
             </button>
     );
 };

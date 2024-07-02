@@ -79,6 +79,7 @@ const RedeemFiva: FC<MintProps> = ({ inputValue }) => {
     return (
         <div className="flex flex-row gap-4">
             <button onClick={onClickFirst} className="button">Redeem YT</button>
+        {/* dfldgff */}
             <button onClick={onClickSecond} className="button">Redeem PT</button>
         </div>
     );

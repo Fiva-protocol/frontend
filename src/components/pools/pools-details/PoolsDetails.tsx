@@ -26,7 +26,7 @@ export interface PoolsDetailsProps {
 
 const PoolsDetails: React.FC<PoolsDetailsProps> = (props) => {
   const [liquidityActionType, setLiquidityActionType] = useState<'add' | 'remove'>('add');
-  const [withdrawPercentage, setWithdrawPercentage] = useState<number>(0); // New state for percentage
+//   const [withdrawPercentage, setWithdrawPercentage] = useState<number>(0); // New state for percentage
 
   const { type } = props;
 

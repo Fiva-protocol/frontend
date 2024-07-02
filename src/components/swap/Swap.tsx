@@ -7,7 +7,8 @@ import DoubleInput from '../shared/double-input/DoubleInput';
 import tsTonIcon from '../../assets/icons/tsTonIcon.svg';
 import SegmentedControlButton from '../shared/segmented-control/SegmentedControlButton';
 import { useEstimateSwap } from '../../hooks/blockchain/useEstimateSwap';
-import {  fromNano } from '@ton/core';
+import { Address, fromNano } from '@ton/core';
+import { useJettonBalance } from '../../hooks/useJettonBalance';
 import { useTonAddress } from '@tonconnect/ui-react';
 import logo from '../../assets/icons/tokenLogo.svg';
 import '../../App.css';
@@ -18,6 +19,7 @@ import SwapTokensYT from './SwapTokensYT';
 const tsTONAddress = 'kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf';
 const PTAddress = 'EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK';
 const YTAddress = 'EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW';
+
 
 const Swap: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'YT' | 'PT'>('YT');
@@ -39,6 +41,20 @@ const Swap: React.FC = () => {
     amountOut: bigint;
     tradeFee: bigint;
   } | null>(null);
+
+
+  const ytBalance = useJettonBalance(Address.parse('EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW'));
+  const ptBalance = useJettonBalance(Address.parse('EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK'));
+  const tsTONBalance = useJettonBalance(Address.parse('kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf'));
+  const formatYtBalance = ytBalance ? Number(fromNano(ytBalance)).toFixed(2) : '0.00';
+  const formatPtBalance = ptBalance ? Number(fromNano(ptBalance)).toFixed(2) : '0.00';
+  const formatTsBalance = tsTONBalance ? Number(fromNano(tsTONBalance)).toFixed(2) : '0.00';
+  console.log("ytBalance", ytBalance)
+  console.log("ytBalance", formatYtBalance)
+  console.log("ptBalance", ptBalance)
+  console.log("ptBalance", formatPtBalance)
+  console.log("tsBalance", tsTONBalance)
+  console.log("tsBalance", formatTsBalance)
 
   const assetYTIn = activeSubTab === 'sell' ? YTAddress : tsTONAddress;
   const assetYTOut = activeSubTab === 'sell' ? tsTONAddress : YTAddress;
@@ -110,7 +126,7 @@ const Swap: React.FC = () => {
           label1InputLeft={activeSubTab === 'buy' ? 'tsTON' : (activeTab === 'YT' ? 'YT tsTON' : 'PT tsTON')}
           label2InputLeft="Tonstakers"
           label1={'Input'}
-          label2={'Balance: 0'}
+          label2={`Balance: ${activeSubTab === 'buy' ? formatTsBalance : (activeTab === 'YT' ? formatYtBalance : formatPtBalance)}`}
           isReadOnly={false}
           inputType="number"
           value={'0'}
@@ -146,7 +162,9 @@ const Swap: React.FC = () => {
             )}
           </>
         ) : (
-          <></>
+          <button className="button" onClick={() => {/* wallet connection info ? */}}>
+                Please connect wallet
+              </button>
         )}
       </div>
     </>

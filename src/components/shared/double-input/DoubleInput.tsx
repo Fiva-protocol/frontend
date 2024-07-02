@@ -26,7 +26,7 @@ const DoubleInput: React.FC<DoubleInputProps> = ({
 
   const [inputValue, setInputValue] = useState(value);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: any) => {
     setInputValue(e.target.value);
     onChange(e.target.value);
   };
