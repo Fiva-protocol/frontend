@@ -15,7 +15,7 @@ const Footer = () => {
         <img src={converterIcon} alt="Mint" />
         <span>Mint</span>
       </NavLink>
-      <NavLink to="/swap">
+      <NavLink to="/swap/">
         <img src={marketIcon} alt="Swap" />
         <span>Swap</span>
       </NavLink>

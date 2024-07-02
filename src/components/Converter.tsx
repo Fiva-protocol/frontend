@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Converter.css';
 import './CommonButton.css';
 import tsTonIcon from '../assets/icons/tsTonIcon.svg';
 import downArrow from '../assets/icons/downArrow.svg';
-import MintFiva from './MintYTPT';
-import RedeemFiva from './Redeem'; // Импортируем RedeemFiva
+import DoubleInput from './shared/double-input/DoubleInput';
+import CircleIcon from './shared/circle-icon/CircleIcon';
+import SegmentedControlButton from './shared/segmented-control/SegmentedControlButton';
 import { useTonAddress } from '@tonconnect/ui-react';
+import MintFiva from './MintYTPT';
+import RedeemFiva from './Redeem';
+import logo from '../assets/icons/tokenLogo.svg';
 
 enum Tab {
   Mint = 'mint',
@@ -15,200 +19,141 @@ enum Tab {
 const Converter: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Mint);
   const [inputValue, setInputValue] = useState<number>(10);
+  const [ytValue, setYtValue] = useState<number>(0);
+  const [ptValue, setPtValue] = useState<number>(0);
   const userAddress = useTonAddress();
-  const blockchainIndex = 1;  // value from blockchain
+  const blockchainIndex = 2;  // value from blockchain
 
-  const calculateValues = (value: number) => {
+  const calculateValues = useCallback((value: number) => {
     return {
       tsTon: value,
       pt: value / blockchainIndex,
       yt: value / blockchainIndex,
     };
-  };
-
-  const { tsTon, pt, yt } = calculateValues(inputValue);
+  }, [blockchainIndex]);
 
   useEffect(() => {
     const { pt, yt } = calculateValues(inputValue);
     setPtValue(pt);
     setYtValue(yt);
-  }, [inputValue]);
-
-  const [ptValue, setPtValue] = useState<number>(pt);
-  const [ytValue, setYtValue] = useState<number>(yt);
+  }, [inputValue, calculateValues]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
     setInputValue(value);
   };
 
-  const calculateTSton = (value: number) => {
+  const calculateTSton = useCallback((value: number) => {
     return blockchainIndex * value;
-  };
+  }, [blockchainIndex]);
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case Tab.Mint:
-        return (
-          <div className="converter-section">
-            <h1>Mint your Tokens</h1>
-            <p>Mint SY tokens back into their corresponding.</p>
-            <div className="tabs">
-              <button
-                className={`tab ${activeTab === Tab.Mint ? 'active' : ''}`}
-                onClick={() => setActiveTab(Tab.Mint)}
-              >
-                Mint
-              </button>
-              <button
-                className={`tab ${activeTab === Tab.Redeem ? 'active' : ''}`}
-                onClick={() => setActiveTab(Tab.Redeem)}
-              >
-                Redeem
-              </button>
-            </div>
-            <br></br>
-            <div className="input-group">
-              <label>Input Balance: 0</label>
-              <div className="input-row">
-                <select className="input-select">
-                  <option value="tsTon">tsTON</option>
-                  {/* Add other options here */}
-                </select>
-                <input
-                  type="number"
-                  placeholder="10"
-                  className="input-number"
-                  value={inputValue}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div className="swap-icon">
-              <img src={downArrow} alt="Swap" />
-            </div>
-            <div className="output-group">
-              <div className="input-row">
-                <div className="output-label">
-                  <span><img src={tsTonIcon} alt="PT tsTON" />PT tsTON</span>
-                  <span>25 Jul 2024</span>
-                </div>
-                <input
-                  type="number"
-                  placeholder="0"
-                  className="input-number"
-                  value={ptValue}
-                  readOnly
-                />
-              </div>
-              <div className="input-row">
-                <div className="output-label">
-                  <span><img src={tsTonIcon} alt="YT tsTON" />YT tsTON</span>
-                  <span>25 Jul 2024</span>
-                </div>
-                <input
-                  type="number"
-                  placeholder="0"
-                  className="input-number"
-                  value={ytValue}
-                  readOnly
-                />
-              </div>
-            </div>
-            {userAddress ? (
-              <MintFiva inputValue={inputValue.toString()} />  
-            ) : (
-              <button className="button" onClick={() => {/* wallet connection info ? */}}>
-                Connect Wallet
-              </button>
-            )}
-          </div>
-        );
-        case Tab.Redeem:
-          return (
-            <div className="converter-section">
-              <h1>Redeem your Tokens</h1>
-              <p>Redeem SY tokens back into their corresponding.</p>
-              <div className="tabs">
-                <button
-                  className={`tab ${activeTab === Tab.Mint ? 'active' : ''}`}
-                  onClick={() => setActiveTab(Tab.Mint)}
-                >
-                  Mint
-                </button>
-                <button
-                  className={`tab ${activeTab === Tab.Redeem ? 'active' : ''}`}
-                  onClick={() => setActiveTab(Tab.Redeem)}
-                >
-                  Redeem
-                </button>
-              </div>
-              <br></br>
-              <div className="input-group">
-                <label>Input Balance: 0</label>
-                <div className="input-row">
-                  <div className="output-label">
-                    <span><img src={tsTonIcon} alt="PT tsTON" />PT tsTON</span>
-                    <span>25 Jul 2024</span>
-                  </div>
-                  <input type="number"
-                    placeholder="0"
-                    className="input-number"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <label>Balance: 0</label>
-                <div className="input-row">
-                  <div className="output-label">
-                    <span><img src={tsTonIcon} alt="YT tsTON" />YT tsTON</span>
-                    <span>25 Jul 2024</span>
-                  </div>
-                  <input
-                    type="number"
-                    placeholder="0"
-                    className="input-number"
-                    value={inputValue}
-                    readOnly
-                  />
-                </div>
-              </div>
-              <div className="swap-icon">
-                <img src={downArrow} alt="Swap" />
-              </div>
-              <div className="output-group">
-                <label>Output</label>
-                <div className="input-row">
-                  <select className="input-select">
-                    <option value="tsTon">tsTON</option>
-                    {/* Add other options here */}
-                  </select>
-                  <input
-                    type="number"
-                    placeholder="0"
-                    className="input-number"
-                    value={calculateTSton(inputValue)}
-                    readOnly
-                  />
-                </div>
-              </div>
-              {!userAddress ? (
-              <button className="connect-wallet">Connect Wallet</button>
-            ) : (
-              <RedeemFiva inputValue={inputValue.toString()} />
-            )}
-            </div>
-          );
-      default:
-        return null;
-    }
-  };
+  const MintTokensTab = ({ inputValue, ytValue, ptValue }) => (
+    <>
+      <DoubleInput
+        iconPathInputLeft={tsTonIcon}
+        label1InputLeft="tsTON"
+        label2InputLeft="Tonstakers"
+        label1="Input"
+        label2="Balance: 0"
+        value={inputValue}
+        onChange={handleInputChange}
+        readOnly={false}
+      />
+
+      <CircleIcon iconPath={downArrow} />
+
+      <div className="flex flex-col gap-4">
+        <DoubleInput
+          iconPathInputLeft={logo}
+          label1InputLeft="YT tsTON"
+          label2InputLeft="Tonstakers"
+          label1="Output"
+          label2=""
+          value={ytValue}
+          readOnly={true}
+        />
+
+        <DoubleInput
+          iconPathInputLeft={logo}
+          label1InputLeft="PT tsTON"
+          label2InputLeft="Tonstakers"
+          label1=""
+          label2=""
+          value={ptValue}
+          readOnly={true}
+        />
+      </div>
+      {!userAddress 
+      ? ( <button className="connect-wallet">Connect Wallet</button>) 
+      : <MintFiva inputValue={inputValue.toString()} /> }
+    </>
+  );
+
+  const RedeemTokensTab = ({ inputValue }) => (
+    <>
+      <div className="flex flex-col gap-4">
+        <DoubleInput
+          iconPathInputLeft={logo}
+          label1InputLeft="YT tsTON"
+          label2InputLeft="Tonstakers"
+          label1="Input"
+          label2="Balance: 0"
+          value={inputValue}
+          onChange={handleInputChange}
+          readOnly={false}
+        />
+
+        <DoubleInput
+          iconPathInputLeft={logo}
+          label1InputLeft="PT tsTON"
+          label2InputLeft="Tonstakers"
+          label1=""
+          label2="Balance: 0"
+          value={inputValue}
+          onChange={handleInputChange}
+          readOnly={false}
+        />
+      </div>
+
+      <CircleIcon iconPath={downArrow} />
+
+      <DoubleInput
+        iconPathInputLeft={tsTonIcon}
+        label1InputLeft="tsTON"
+        label2InputLeft="Tonstakers"
+        label1="Output"
+        label2=""
+        value={calculateTSton(inputValue)}
+        readOnly={true}
+      />
+      {!userAddress 
+      ? ( <button className="connect-wallet">Connect Wallet</button>) 
+      : <RedeemFiva inputValue={inputValue.toString()} /> }
+    </>
+  );
 
   return (
-    <div className="converter-page">
-      <div className="converter-content">
-        {renderTabContent()}
+    <div className="container mx-auto px-6 py-8 flex flex-col gap-6">
+      <div className="flex flex-col items-start">
+        <h1>{activeTab === Tab.Mint ? 'Mint Liquidity Pools' : 'Redeem Liquidity Pools'}</h1>
+        <div className="text-3">
+          {activeTab === Tab.Mint
+            ? 'Mint SY tokens back into their corresponding.'
+            : 'Redeem SY tokens back into their corresponding.'}
+        </div>
       </div>
+      <SegmentedControlButton
+        state1="mint"
+        state2="redeem"
+        label1="Mint"
+        label2="Redeem"
+        onChange={(value: string) => setActiveTab(value as Tab)}
+      />
+      {activeTab === Tab.Mint ? (
+        <MintTokensTab inputValue={inputValue} ytValue={ytValue} ptValue={ptValue} />
+      ) : (
+        <RedeemTokensTab inputValue={inputValue} />
+      )}
     </div>
   );
 };
