@@ -5,6 +5,16 @@ import ytIcon from '../../assets/icons/ytIcon.svg';
 import lpIcon from '../../assets/icons/lpIcon.svg';
 import infoIcon from '../../assets/icons/infoIcon.svg';
 import { useTonAddress } from '@tonconnect/ui-react';
+import { useJettonBalance } from '../../hooks/useJettonBalance';
+import { useLPBalance } from '../../hooks/pools/useLPBalance';
+import { Address, fromNano } from '@ton/core';
+import usePtUsdtPrice from '../../hooks/TVL/usePtUsdtPrice';
+import useYtUsdtPrice from '../../hooks/TVL/useYtUsdtPrice ';
+import logo from '../../assets/icons/tokenLogo.svg';
+import { useImpliedApy } from '../../hooks/useImpliedAPY';
+import { useClaimTokens } from '../../hooks/useClaimTokens';  // Import the custom hook
+
+
 
 const Dashboard: React.FC = () => {
   // const [activeSubTab, setActiveSubTab] = useState<'All Assets' | 'PT' | 'YT' | 'LP'>('All Assets');
@@ -14,6 +24,34 @@ const Dashboard: React.FC = () => {
   //   setActiveSubTab(subTab);
   // };
 
+  const ptBalance = useJettonBalance(Address.parse('EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK'));
+  const ytBalance = useJettonBalance(Address.parse('EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW'));
+  const pTLPBalance = useLPBalance('kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf', 'EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK');
+  const YTLPBalance = useLPBalance('kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf', 'EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW');
+
+
+  const ptResults = usePtUsdtPrice();
+  const ptRate = ptResults.ptPrice || 0;
+  const ytResults = useYtUsdtPrice();
+  const ytRate = ytResults.ytPrice || 0;
+
+  const ptBalanceUSD = ptBalance ? Number(fromNano(ptBalance)) * ptRate : 0;
+  const ytBalanceUSD = ytBalance ? Number(fromNano(ytBalance)) * ytRate : 0;
+
+  const formattedPTLPBalance = pTLPBalance ? Number(fromNano(pTLPBalance)) : 0;
+  const formattedYTLPBalance = YTLPBalance ? Number(fromNano(YTLPBalance)) : 0;
+
+  const impliedResults = useImpliedApy();
+  const impliedAPY = impliedResults?.impliedApy || 0;
+  const formattedImpliedAPY = (impliedAPY * 100).toFixed(2) + '%';
+
+  const totalBalance = (ptBalanceUSD + ytBalanceUSD).toFixed(2);
+  const totalLPBalance = (formattedPTLPBalance + formattedYTLPBalance).toFixed(2);
+
+  const {claimTokens} = useClaimTokens();
+
+  // const ptBalanceUSD = (Number(fromNano(ptBalance!)) * ptRate!).toFixed(2)
+  // const ytBalanceUSD = Number(ytBalance!) * ytRate! 
   const formatAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-5)}`;
   };
@@ -41,7 +79,7 @@ const Dashboard: React.FC = () => {
               </svg>
               My Current Balance
             </div>
-            <div>$0.00</div>
+            <div>$ {totalBalance}</div>
           </div>
           <div className="flex flex-row justify-between">
             <div className="flex flex-row gap-2">
@@ -53,11 +91,11 @@ const Dashboard: React.FC = () => {
                   stroke-linejoin="round"
                 />
               </svg>
-              My Net P&L
+              My LP Balance
             </div>
-            <div>$0.00</div>
+            <div>LP {totalLPBalance}</div>
           </div>
-          <div className="flex flex-row justify-between">
+          {/* <div className="flex flex-row justify-between">
             <div className="flex flex-row gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
@@ -70,7 +108,7 @@ const Dashboard: React.FC = () => {
               My Total Capital
             </div>
             <div>$0.00</div>
-          </div>
+          </div> */}
           <div className="flex flex-row justify-between">
             <div className="flex flex-row gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -87,28 +125,28 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <button className="button">Claim Yield & Rewards</button>
+        <button className="button"  onClick={claimTokens}>Claim Yield & Rewards</button>
 
         <div className="flex flex-col gap-2">
           <div className="flex w-full justify-between market-subdetails px-5">
             <div className="market-subdetail flex w-full justify-between">
-              <img src={ytIcon} alt="YT Icon" className="subdetail-icon" />
+              <img src={logo} alt="YT Icon" className="subdetail-icon" />
               <div className="subdetail-info flex flex-col">
-                <span className="subdetail-value">Balance</span>
-                <span className="text-4">APY</span>
+                <span className="subdetail-value">YT tsTON</span>
+                {/* <span className="text-4">APY</span> */}
               </div>
-              <span className="subdetail-value">$0.00</span>
+              <span className="subdetail-value">$ {(ytBalanceUSD).toFixed(2)}</span>
             </div>
           </div>
 
           <div className="flex w-full justify-between market-subdetails px-5">
             <div className="market-subdetail flex w-full justify-between ">
-              <img src={ptIcon} alt="PT Icon" className="subdetail-icon" />
+              <img src={logo} alt="PT Icon" className="subdetail-icon" />
               <div className="subdetail-info  flex flex-col">
-                <span className="subdetail-value">Balance</span>
-                <span className="text-4">APY</span>
+                <span className="subdetail-value">PT tsTON</span>
+                <span className="text-4">APY {formattedImpliedAPY}</span>
               </div>
-              <span className="subdetail-value">$0.00</span>
+              <span className="subdetail-value">$ {(ptBalanceUSD).toFixed(2)}</span>
             </div>
           </div>
 
@@ -116,10 +154,21 @@ const Dashboard: React.FC = () => {
             <div className="market-subdetail flex w-full justify-between">
               <img src={lpIcon} alt="LP Icon" className="subdetail-icon" />
               <div className="subdetail-info  flex flex-col">
-                <span className="subdetail-value">Balance</span>
-                <span className="text-4">APY</span>
+                <span className="subdetail-value"> LP PT </span>
+                {/* <span className="text-4">APY</span> */}
               </div>
-              <span className="subdetail-value">$0.00</span>
+              <span className="subdetail-value">LP {(formattedPTLPBalance).toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div className="flex w-full justify-between market-subdetails px-5">
+            <div className="market-subdetail flex w-full justify-between">
+              <img src={lpIcon} alt="LP Icon" className="subdetail-icon" />
+              <div className="subdetail-info  flex flex-col">
+                <span className="subdetail-value">LP YT</span>
+                {/* <span className="text-4">APY</span> */}
+              </div>
+              <span className="subdetail-value">LP {(formattedYTLPBalance).toFixed(2)}</span>
             </div>
           </div>
         </div>
