@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import './PercentageSlider.css'
+import './PercentageSlider.css';
 
-const PercentageSlider = () => {
+const PercentageSlider = ({ onPercentageChange }) => {
   const [percentage, setPercentage] = useState(0);
 
   const handleSliderChange = (event) => {
-    setPercentage(event.target.value);
+    const newPercentage = event.target.value;
+    setPercentage(newPercentage);
+    onPercentageChange(newPercentage); // Call the callback function
   };
 
   return (
@@ -18,7 +20,7 @@ const PercentageSlider = () => {
         onChange={handleSliderChange}
         className="slider w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
       />
-      <span className=" text-lg text-white">{percentage}%</span>
+      <span className="text-lg text-white">{percentage}%</span>
     </div>
   );
 };

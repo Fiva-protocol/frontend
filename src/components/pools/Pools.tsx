@@ -2,6 +2,9 @@ import { useState } from 'react';
 import './Pools.css';
 import tsTonIcon from '../../assets/icons/tsTonIcon.svg';
 import { PoolsDetailsProps } from './pools-details/PoolsDetails';
+import { calculateDaysToMaturity } from '../../utils/dateCalc';
+import { useTvlCalculation } from '../../hooks/TVL/useTvlCalculation';
+
 
 const Pools = () => {
   const [activeControl, setActiveControl] = useState('active');
@@ -39,8 +42,15 @@ const Pools = () => {
               Inactive
             </span>
           </div>
-          <PoolCard type="pt" title="PT tsTON" value="15.61" tvl="$1000" maturity="27 Jun 2024" daysToMaturity="100" />
-          <PoolCard type="yt" title="YT tsTON" value="15.21" tvl="$2000" maturity="27 Jun 2024" daysToMaturity="80" />
+          {activeControl === 'active' && (
+            <>
+              <PoolCard type="pt" title="PT tsTON" maturity="31 Dec 2024" daysToMaturity={calculateDaysToMaturity('2024-12-31')} />
+              <PoolCard type="yt" title="YT tsTON" maturity="31 Dec 2024" daysToMaturity={calculateDaysToMaturity('2024-12-31')} />
+            </>
+          )}
+          {activeControl === 'inactive' && (
+            <div className="text-gray-400">No inactive pools</div>
+          )}
         </div>
       </div>
     </>
@@ -50,18 +60,16 @@ const Pools = () => {
 export function PoolCard({
   type,
   title,
-  value,
-  tvl,
   maturity,
   daysToMaturity,
 }: {
   type: PoolsDetailsProps['type'];
   title: string;
-  value: string;
-  tvl: string;
   maturity: string;
-  daysToMaturity: string;
+  daysToMaturity: number;
 }) {
+  const jettonAddress = type === 'pt' ? 'EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK' : 'EQDsmCkmupqZ9mKad3BMQg-LEI5Br5PV0pBZvAH11_Du-xcW';
+  const tvl = useTvlCalculation(jettonAddress);
   const handleCardClick = (type: PoolsDetailsProps['type']) => {
     console.log(type);
     // Navigate to another URL
@@ -80,8 +88,7 @@ export function PoolCard({
         </div>
 
         <div className="">
-          <div>{value}%</div>
-          <div className="text-gray-400">{tvl} TVL</div>
+          <div>{`TVL: $${tvl}`}</div>
         </div>
 
         <div className="flex flex-row justify-between w-full">
