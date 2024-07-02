@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Swap.css';
-import downArrow from '../assets/icons/downArrow.svg';
-import CircleIcon from './shared/circle-icon/CircleIcon';
-import DoubleInput from './shared/double-input/DoubleInput';
-import tsTonIcon from '../assets/icons/tsTonIcon.svg';
-import SegmentedControlButton from './shared/segmented-control/SegmentedControlButton';
-import { useEstimateSwap } from '../hooks/blockchain/useEstimateSwap';
+import downArrow from '../../assets/icons/downArrow.svg';
+import CircleIcon from '../shared/circle-icon/CircleIcon';
+import DoubleInput from '../shared/double-input/DoubleInput';
+import tsTonIcon from '../../assets/icons/tsTonIcon.svg';
+import SegmentedControlButton from '../shared/segmented-control/SegmentedControlButton';
+import { useEstimateSwap } from '../../hooks/blockchain/useEstimateSwap';
 import { Address, fromNano, Sender, SenderArguments, toNano } from '@ton/core';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import { Asset, Factory, JettonRoot, PoolType, ReadinessStatus, VaultJetton } from '@dedust/sdk';
-import { useTonClient } from '../hooks/useTonClient';
+import { useTonClient } from '../../hooks/useTonClient';
+import '../../App.css'
+
+import SwapTokensPT from './SwapTokensPT'; //F
+import SwapTokensYT from './SwapTokensYT'; //F
+// import CommonButton from '../CommonButton'; //F
 
 const tsTONAddress = 'kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf';
 const PTAddress = 'EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK';
@@ -108,113 +112,113 @@ const Swap: React.FC = () => {
     };
   };
 
-  const handleSwapClickYT = async () => {
-    if (userAddress && tonClient && amountIn) {
-        const sender = createSender();
+  //   const handleSwapClickYT = async () => {
+  //     if (userAddress && tonClient && amountIn) {
+  //         const sender = createSender();
 
-        const tsTON = Asset.jetton(Address.parse(tsTONAddress));
-        const YT = Asset.jetton(Address.parse(YTAddress));
+  //         const tsTON = Asset.jetton(Address.parse(tsTONAddress));
+  //         const YT = Asset.jetton(Address.parse(YTAddress));
 
-        const factory = tonClient.open(Factory.createFromAddress(FACTORY_TESTNET_ADDR));
-        const pool = tonClient.open(await factory.getPool(PoolType.VOLATILE, [tsTON, YT]));
+  //         const factory = tonClient.open(Factory.createFromAddress(FACTORY_TESTNET_ADDR));
+  //         const pool = tonClient.open(await factory.getPool(PoolType.VOLATILE, [tsTON, YT]));
 
-        if ((await pool.getReadinessStatus()) !== ReadinessStatus.READY) {
-            throw new Error('Pool (tsTON, YT) does not exist.');
-        }
+  //         if ((await pool.getReadinessStatus()) !== ReadinessStatus.READY) {
+  //             throw new Error('Pool (tsTON, YT) does not exist.');
+  //         }
 
-        // const amountIn = toNano(swapAmount); // Convert input to Nano
+  //         // const amountIn = toNano(swapAmount); // Convert input to Nano
 
-        if (activeSubTab === 'buy') {
-            const tsTONVault = tonClient.open(await factory.getJettonVault(Address.parse(tsTONAddress)));
-            const tsTONRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(tsTONAddress)));
-            const tsTONWallet = tonClient.open(await tsTONRoot.getWallet(Address.parse(userAddress)));
+  //         if (activeSubTab === 'buy') {
+  //             const tsTONVault = tonClient.open(await factory.getJettonVault(Address.parse(tsTONAddress)));
+  //             const tsTONRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(tsTONAddress)));
+  //             const tsTONWallet = tonClient.open(await tsTONRoot.getWallet(Address.parse(userAddress)));
 
-            try {
-                await tsTONWallet.sendTransfer(sender, toNano('0.3'), {
-                    amount: toNano(amountIn),
-                    destination: tsTONVault.address,
-                    responseAddress: Address.parse(userAddress), // return gas to user
-                    forwardAmount: toNano('0.25'),
-                    forwardPayload: VaultJetton.createSwapPayload({ poolAddressYT }),
-                });
-                console.log('Swap transaction successfully sent');
-            } catch (error) {
-                console.error('Error in swap transaction:', error);
-            }
-        } else {
-            const ytVault = tonClient.open(await factory.getJettonVault(Address.parse(YTAddress)));
-            const ytRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(YTAddress)));
-            const ytWallet = tonClient.open(await ytRoot.getWallet(Address.parse(userAddress)));
+  //             try {
+  //                 await tsTONWallet.sendTransfer(sender, toNano('0.3'), {
+  //                     amount: toNano(amountIn),
+  //                     destination: tsTONVault.address,
+  //                     responseAddress: Address.parse(userAddress), // return gas to user
+  //                     forwardAmount: toNano('0.25'),
+  //                     forwardPayload: VaultJetton.createSwapPayload({ poolAddressYT }),
+  //                 });
+  //                 console.log('Swap transaction successfully sent');
+  //             } catch (error) {
+  //                 console.error('Error in swap transaction:', error);
+  //             }
+  //         } else {
+  //             const ytVault = tonClient.open(await factory.getJettonVault(Address.parse(YTAddress)));
+  //             const ytRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(YTAddress)));
+  //             const ytWallet = tonClient.open(await ytRoot.getWallet(Address.parse(userAddress)));
 
-            try {
-                await ytWallet.sendTransfer(sender, toNano('0.3'), {
-                    amount: toNano(amountIn),
-                    destination: ytVault.address,
-                    responseAddress: Address.parse(userAddress), // return gas to user
-                    forwardAmount: toNano('0.25'),
-                    forwardPayload: VaultJetton.createSwapPayload({ poolAddressYT }),
-                });
-                console.log('Swap transaction successfully sent');
-            } catch (error) {
-                console.error('Error in swap transaction:', error);
-            }
-        }
-    }
-};
+  //             try {
+  //                 await ytWallet.sendTransfer(sender, toNano('0.3'), {
+  //                     amount: toNano(amountIn),
+  //                     destination: ytVault.address,
+  //                     responseAddress: Address.parse(userAddress), // return gas to user
+  //                     forwardAmount: toNano('0.25'),
+  //                     forwardPayload: VaultJetton.createSwapPayload({ poolAddressYT }),
+  //                 });
+  //                 console.log('Swap transaction successfully sent');
+  //             } catch (error) {
+  //                 console.error('Error in swap transaction:', error);
+  //             }
+  //         }
+  //     }
+  // };
 
-  const handleSwapClickPT = async () => {
-    if (userAddress && tonClient && amountIn) {
-      const sender = createSender();
+  //   const handleSwapClickPT = async () => {
+  //     if (userAddress && tonClient && amountIn) {
+  //       const sender = createSender();
 
-      const tsTON = Asset.jetton(Address.parse(tsTONAddress));
-      const PT = Asset.jetton(Address.parse(PTAddress));
+  //       const tsTON = Asset.jetton(Address.parse(tsTONAddress));
+  //       const PT = Asset.jetton(Address.parse(PTAddress));
 
-      const factory = tonClient.open(Factory.createFromAddress(FACTORY_TESTNET_ADDR));
-      const pool = tonClient.open(await factory.getPool(PoolType.VOLATILE, [tsTON, PT]));
+  //       const factory = tonClient.open(Factory.createFromAddress(FACTORY_TESTNET_ADDR));
+  //       const pool = tonClient.open(await factory.getPool(PoolType.VOLATILE, [tsTON, PT]));
 
-      if ((await pool.getReadinessStatus()) !== ReadinessStatus.READY) {
-        throw new Error('Pool (tsTON, PT) does not exist.');
-      }
+  //       if ((await pool.getReadinessStatus()) !== ReadinessStatus.READY) {
+  //         throw new Error('Pool (tsTON, PT) does not exist.');
+  //       }
 
-      // amountIn = toNano(amountIn); // Convert input to Nano
+  //       // amountIn = toNano(amountIn); // Convert input to Nano
 
-      if (activeSubTab === 'buy') {
-        const tsTONVault = tonClient.open(await factory.getJettonVault(Address.parse(tsTONAddress)));
-        const tsTONRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(tsTONAddress)));
-        const tsTONWallet = tonClient.open(await tsTONRoot.getWallet(Address.parse(userAddress)));
+  //       if (activeSubTab === 'buy') {
+  //         const tsTONVault = tonClient.open(await factory.getJettonVault(Address.parse(tsTONAddress)));
+  //         const tsTONRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(tsTONAddress)));
+  //         const tsTONWallet = tonClient.open(await tsTONRoot.getWallet(Address.parse(userAddress)));
 
-        try {
-          await tsTONWallet.sendTransfer(sender, toNano('0.3'), {
-            amount: toNano(amountIn),
-            destination: tsTONVault.address,
-            responseAddress: Address.parse(userAddress), // return gas to user
-            forwardAmount: toNano('0.25'),
-            forwardPayload: VaultJetton.createSwapPayload({ poolAddressPT }),
-          });
-          console.log('Swap transaction successfully sent');
-        } catch (error) {
-          console.error('Error in swap transaction:', error);
-        }
-      } else {
-        const ptVault = tonClient.open(await factory.getJettonVault(Address.parse(PTAddress)));
-        const ptRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(PTAddress)));
-        const ptWallet = tonClient.open(await ptRoot.getWallet(Address.parse(userAddress)));
+  //         try {
+  //           await tsTONWallet.sendTransfer(sender, toNano('0.3'), {
+  //             amount: toNano(amountIn),
+  //             destination: tsTONVault.address,
+  //             responseAddress: Address.parse(userAddress), // return gas to user
+  //             forwardAmount: toNano('0.25'),
+  //             forwardPayload: VaultJetton.createSwapPayload({ poolAddressPT }),
+  //           });
+  //           console.log('Swap transaction successfully sent');
+  //         } catch (error) {
+  //           console.error('Error in swap transaction:', error);
+  //         }
+  //       } else {
+  //         const ptVault = tonClient.open(await factory.getJettonVault(Address.parse(PTAddress)));
+  //         const ptRoot = tonClient.open(JettonRoot.createFromAddress(Address.parse(PTAddress)));
+  //         const ptWallet = tonClient.open(await ptRoot.getWallet(Address.parse(userAddress)));
 
-        try {
-          await ptWallet.sendTransfer(sender, toNano('0.3'), {
-            amount: toNano(amountIn),
-            destination: ptVault.address,
-            responseAddress: Address.parse(userAddress), // return gas to user
-            forwardAmount: toNano('0.25'),
-            forwardPayload: VaultJetton.createSwapPayload({ poolAddressPT }),
-          });
-          console.log('Swap transaction successfully sent');
-        } catch (error) {
-          console.error('Error in swap transaction:', error);
-        }
-      }
-    }
-  };
+  //         try {
+  //           await ptWallet.sendTransfer(sender, toNano('0.3'), {
+  //             amount: toNano(amountIn),
+  //             destination: ptVault.address,
+  //             responseAddress: Address.parse(userAddress), // return gas to user
+  //             forwardAmount: toNano('0.25'),
+  //             forwardPayload: VaultJetton.createSwapPayload({ poolAddressPT }),
+  //           });
+  //           console.log('Swap transaction successfully sent');
+  //         } catch (error) {
+  //           console.error('Error in swap transaction:', error);
+  //         }
+  //       }
+  //     }
+  //   };
 
   return (
     <>
@@ -287,16 +291,28 @@ const Swap: React.FC = () => {
         </div>
 
         {userAddress ? (
-          <button onClick={activeTab ==='PT' ? handleSwapClickPT : handleSwapClickYT} className="button">
-            {activeSubTab === 'buy' ? `Buy ${activeTab}` : `Sell ${activeTab}`}
-          </button>
+          <>
+            {activeTab === 'PT' ? (
+              <SwapTokensPT subTab={activeSubTab} amountIn={amountIn} />
+            ) : (
+              <SwapTokensYT subTab={activeSubTab} amountIn={amountIn} />
+            )}
+            {/* <div className="action-button-container">
+              <button
+                onClick={() => console.log(`${activeSubTab === 'buy' ? 'Buy' : 'Sell'} ${activeTab} clicked`)}
+                className="button"
+              >
+                Swap
+              </button>
+            </div> */}
+          </>
         ) : (
-          <button
-            onClick={() => console.log(`${activeSubTab === 'buy' ? 'Buy' : 'Sell'} ${activeTab} clicked`)}
-            className="button"
-          >
-            Connect to wallet
-          </button>
+          <></>
+          // <div className="action-button-container">
+          //   <button className="button" onClick={() => console.log(`${activeSubTab === 'buy' ? 'Buy' : 'Sell'} ${activeTab} clicked`)}>
+          //     {activeSubTab === 'buy' ? `Buy ${activeTab}` : `Sell ${activeTab}`}
+          //   </button>
+          // </div>
         )}
       </div>
 

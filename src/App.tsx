@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import Dashboard from './components/Dashboard';
 import TestTokens from './components/TestTokens';
 import Market from './components/Market';
-import Swap from './components/Swap';
+import Swap from './components/swap/Swap';
 import Converter from './components/Converter';
 import Onboarding from './components/Onboarding';
 import Pools from './components/pools/Pools';
