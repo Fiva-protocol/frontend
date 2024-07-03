@@ -8,7 +8,7 @@ const OnboardingStep1 = ({ nextStep }) => {
         <div className="onboarding">
             <video src={onboardingImage} className="onboarding-image" autoPlay muted loop playsInline />
             <h1>Welcome to Fiva</h1>
-            <p>Discover the future of decentralized finance. Manage, trade, and earn on your assets seamlessly.</p>
+            <p>Discover the future of yield management on TON. Please <strong>go through the onboarding</strong> process and follow all recommendations to ensure a smooth experience!</p>
             <div className="progress-indicator">
                 <span className="active"></span>
                 <span></span>

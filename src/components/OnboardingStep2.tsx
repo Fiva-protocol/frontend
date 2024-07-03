@@ -9,7 +9,7 @@ const OnboardingStep2 = ({ nextStep }) => {
     <div className="onboarding">
       <video src={onboardingImage} className="onboarding-image" autoPlay muted loop playsInline />
       <h1>Secure & Transparent</h1>
-      <p>Your assets are protected with top-tier security and full transparency. Trust in the power of decentralised finance.</p>
+      <p>All functionalities are available on <strong>TESTNET</strong>. Please use the Tonkeeper testnet wallet to interact with the app.</p>
       <div className="progress-indicator">
         <span></span>
         <span className="active"></span>
