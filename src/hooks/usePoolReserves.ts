@@ -11,6 +11,9 @@ interface PoolReserves {
   reserve2: bigint;
 }
 
+const cache: { [key: string]: { reserves: PoolReserves, timestamp: number } } = {};
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 export function usePoolReserves(asset1Address: string, asset2Address: string) {
   const client = useTonClient();
   const [reserves, setReserves] = useState<PoolReserves | null>(null);
@@ -25,6 +28,15 @@ export function usePoolReserves(asset1Address: string, asset2Address: string) {
     async function fetchReserves() {
       if (!factory || !client) return;
 
+      const cacheKey = `${asset1Address}_${asset2Address}`;
+      const now = Date.now();
+
+      // Check if cached value exists and is still valid
+      if (cache[cacheKey] && (now - cache[cacheKey].timestamp < CACHE_DURATION)) {
+        setReserves(cache[cacheKey].reserves);
+        return;
+      }
+
       const asset1 = Asset.jetton(Address.parse(asset1Address));
       const asset2 = Asset.jetton(Address.parse(asset2Address));
 
@@ -35,10 +47,18 @@ export function usePoolReserves(asset1Address: string, asset2Address: string) {
 
         const response = await pool.getReserves();
 
-        setReserves({
+        const fetchedReserves = {
           reserve1: response[0],
           reserve2: response[1],
-        });
+        };
+
+        setReserves(fetchedReserves);
+
+        // Update cache
+        cache[cacheKey] = {
+          reserves: fetchedReserves,
+          timestamp: now
+        };
       } catch (error) {
         console.error("Error fetching reserves:", error);
       }

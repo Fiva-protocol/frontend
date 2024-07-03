@@ -4,6 +4,9 @@ import { useTonClient } from "./useTonClient";
 import { useAsyncInitialize } from "./useAsyncInitialize";
 import { Address, OpenedContract } from "@ton/core";
 
+// Simple in-memory cache
+const dataCache: { [key: string]: bigint | null } = {};
+
 export function useFivaData() {
   const client = useTonClient();
   const [index, setIndexData] = useState<null | BigInt>(null);
@@ -19,8 +22,18 @@ export function useFivaData() {
   useEffect(() => {
     async function getValue() {
       if (!fivaContract) return;
+
+      // Check if the value is already in the cache
+      const cacheKey = fivaContract.address.toString();
+      if (dataCache[cacheKey] !== undefined) {
+        setIndexData(dataCache[cacheKey]);
+        return;
+      }
+
+      // Fetch the value if not in the cache
       setIndexData(null);
       const val = await fivaContract.getIndex();
+      dataCache[cacheKey] = val;  // Store the fetched value in the cache
       setIndexData(val);
     }
     getValue();

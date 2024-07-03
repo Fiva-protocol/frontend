@@ -14,6 +14,9 @@ interface ImpliedApyResult {
   impliedApy: number;
 }
 
+// Simple in-memory cache
+const cache: { [key: string]: ImpliedApyResult | null } = {};
+
 export function useImpliedApy() {
   const client = useTonClient();
   const { index, date } = useFivaData();
@@ -28,6 +31,13 @@ export function useImpliedApy() {
   useEffect(() => {
     async function calculateImpliedApy() {
       if (!factory || !client || !index) return;
+
+      // Cache key based on index and date
+      const cacheKey = `${index.toString()}-${date.toISOString()}`;
+      if (cache[cacheKey]) {
+        setResult(cache[cacheKey]);
+        return;
+      }
 
       const assetIn = Asset.jetton(Address.parse(tsTONAddress));
       const assetOut = Asset.jetton(Address.parse(PTAddress));
@@ -51,10 +61,15 @@ export function useImpliedApy() {
         const impliedRate = Math.pow(exchangeRate, 1 / timeToExpiry);
         const impliedApy = Math.pow(impliedRate, normalizedIndex) - 1;
 
-        setResult({
+        const result = {
           exchangeRate: exchangeRate,
           impliedApy: impliedApy,
-        });
+        };
+
+        // Store the result in the cache
+        cache[cacheKey] = result;
+
+        setResult(result);
       } catch (error) {
         console.error("Error calculating implied APY:", error);
       }

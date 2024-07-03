@@ -8,6 +8,9 @@ import { formatNumberWithSpaces } from "../../utils/numberUtils"; // Import the 
 
 const tsTONAddress = "kQCwR07mEDg22t_TYI1oXrb5lRkRUBtmJSjpKGdw_TL2B4yf";
 
+const cache: { [key: string]: { tvl: string, timestamp: number } } = {};
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 export const useTvlCalculation = (jettonAddress: string) => {
   const [tvl, setTvl] = useState<string>('0.00');
   const poolReserves = usePoolReserves(tsTONAddress, jettonAddress);
@@ -16,17 +19,38 @@ export const useTvlCalculation = (jettonAddress: string) => {
   const { ytPrice, loading: ytLoading, error: ytError } = useYtUsdtPrice();
 
   useEffect(() => {
-    if (!poolReserves || tsTonLoading || ptLoading || ytLoading || tsTonError || ptError || ytError) return;
+    const fetchTvl = async () => {
+      if (!poolReserves || tsTonLoading || ptLoading || ytLoading || tsTonError || ptError || ytError) return;
 
-    const { reserve1: tsTonReserve, reserve2: jettonReserve } = poolReserves;
-    const tsTonReserveInUsdt = (Number(fromNano(tsTonReserve)) * (tsTonPrice || 0));
-    const jettonReserveInUsdt = jettonAddress === "EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK" 
-      ? (Number(fromNano(jettonReserve)) * (ptPrice || 0)) 
-      : (Number(fromNano(jettonReserve)) * (ytPrice || 0));
+      const cacheKey = `${jettonAddress}_${tsTONAddress}`;
+      const now = Date.now();
 
-    const totalTvl = tsTonReserveInUsdt + jettonReserveInUsdt;
-    setTvl(formatNumberWithSpaces(totalTvl));
-  }, [poolReserves, tsTonPrice, ptPrice, ytPrice, tsTonLoading, ptLoading, ytLoading, tsTonError, ptError, ytError]);
+      // Check if cached value exists and is still valid
+      if (cache[cacheKey] && (now - cache[cacheKey].timestamp < CACHE_DURATION)) {
+        setTvl(cache[cacheKey].tvl);
+        return;
+      }
+
+      const { reserve1: tsTonReserve, reserve2: jettonReserve } = poolReserves;
+      const tsTonReserveInUsdt = (Number(fromNano(tsTonReserve)) * (tsTonPrice || 0));
+      const jettonReserveInUsdt = jettonAddress === "EQDrQ70VeQ1X8xzszOHVRLq7tAMDrSnPY54O0VKGxZSkAESK" 
+        ? (Number(fromNano(jettonReserve)) * (ptPrice || 0)) 
+        : (Number(fromNano(jettonReserve)) * (ytPrice || 0));
+
+      const totalTvl = tsTonReserveInUsdt + jettonReserveInUsdt;
+      const formattedTvl = formatNumberWithSpaces(totalTvl);
+
+      // Update cache
+      cache[cacheKey] = {
+        tvl: formattedTvl,
+        timestamp: now
+      };
+
+      setTvl(formattedTvl);
+    };
+
+    fetchTvl();
+  }, [poolReserves, tsTonPrice, ptPrice, ytPrice, tsTonLoading, ptLoading, ytLoading, tsTonError, ptError, ytError, jettonAddress]);
 
   return tvl;
 };
