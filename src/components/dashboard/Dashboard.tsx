@@ -10,8 +10,8 @@ import useYtUsdtPrice from '../../hooks/TVL/useYtUsdtPrice ';
 import logo from '../../assets/icons/tokenLogo.svg';
 import { useImpliedApy } from '../../hooks/useImpliedAPY';
 import { useClaimTokens } from '../../hooks/useClaimTokens';  // Import the custom hook
-
-
+import { useUserInterest } from '../../hooks/useUserInterest';
+import { useTsTonUsdtPrice } from '../../hooks/TVL/useTsTonUsdtPrice';
 
 const Dashboard: React.FC = () => {
   const address = useTonAddress();
@@ -41,7 +41,11 @@ const Dashboard: React.FC = () => {
   const totalLPBalance = (formattedPTLPBalance + formattedYTLPBalance).toFixed(2);
 
   const {claimTokens} = useClaimTokens();
-
+  const {userInterest} = useUserInterest();
+  const interestNull = userInterest || 0;
+  const {tsTonPrice} = useTsTonUsdtPrice() || 0;
+  const tsTonPriceNull = tsTonPrice || 0;
+  const interest = (Number(interestNull) * tsTonPriceNull).toFixed(2);
   // const ptBalanceUSD = (Number(fromNano(ptBalance!)) * ptRate!).toFixed(2)
   // const ytBalanceUSD = Number(ytBalance!) * ytRate! 
   const formatAddress = (address: string) => {
@@ -99,7 +103,7 @@ const Dashboard: React.FC = () => {
               </svg>
               My Claimable Yield
             </div>
-            <div>$0.00</div>
+            <div>$ {interest}</div>
           </div>
         </div>
 
