@@ -211,7 +211,7 @@ export function LiquidityAddView({
       <div className="flex flex-col gap-2">
         <DoubleInput
           iconPathInputLeft={logo}
-          label1InputLeft="LP PT"
+          label1InputLeft={`LP ${jettonName}`}
           label2InputLeft="31 Dec 2024"
           label1={'Output'}
           value={estimatedOutput}
