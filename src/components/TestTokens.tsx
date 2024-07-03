@@ -21,7 +21,6 @@ const TestTokens: React.FC = () => {
     <div>
       <h1>Fiva Test Tokens</h1>
       <br></br>
-      <br></br>
       <div className="text-3">1) Connect your testnet wallet 
         <br></br>
         2) Click "Get Test Tokens" button

@@ -30,8 +30,8 @@ const App: React.FC = () => {
 const AppRoutes: React.FC = () => {
   const navigate = useNavigate();
 
-  const navigateToBalance = () => {
-    navigate('/converter');
+  const navigateToMarket = () => {
+    navigate('/market');
   };
 
   return (
@@ -48,7 +48,7 @@ const AppRoutes: React.FC = () => {
                 </>
               }
             />
-            <Route path="/onboarding" element={<Onboarding navigateToBalance={navigateToBalance} />} />
+            <Route path="/onboarding" element={<Onboarding navigateToMarket={navigateToMarket} />} />
             <Route
               path="/dashboard"
               element={

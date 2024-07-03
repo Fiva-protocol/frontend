@@ -19,7 +19,7 @@ enum Tab {
 
 const Converter: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Mint);
-  const [inputValue, setInputValue] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<number | string>('');
   const userAddress = useTonAddress();
 
 
@@ -88,7 +88,7 @@ const Converter: React.FC = () => {
                     className={`flex m-1 justify-center w-full py-2 px-4 cursor-pointer rounded-lg transition duration-200 ease-in-out
                     }`}
                     style={{ backgroundColor: activeTab === Tab.Mint ? '#6161D6' : '' }}
-                    onClick={() => {setActiveTab(Tab.Mint); setInputValue(0)}}
+                    onClick={() => {setActiveTab(Tab.Mint); setInputValue('')}}
                   >
                     Mint
                   </span>
@@ -96,7 +96,7 @@ const Converter: React.FC = () => {
                     className={`flex m-1  justify-center w-full text-white text-sm py-2 px-4 cursor-pointer rounded-lg transition duration-200 ease-in-out 
                     }`}
                     style={{ backgroundColor: activeTab === Tab.Redeem ? '#6161D6' : '' }}
-                    onClick={() => {setActiveTab(Tab.Redeem); setInputValue(0)}}
+                    onClick={() => {setActiveTab(Tab.Redeem); setInputValue('')}}
                   >
                     Redeem
                   </span>
@@ -119,7 +119,7 @@ const Converter: React.FC = () => {
                       </div>
                     </div>
                 </div>
-                  <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange} min="0" ></input>
+                  <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange} min="0" placeholder='0'></input>
                 </div>
               </div>
 
@@ -146,7 +146,7 @@ const Converter: React.FC = () => {
                     </div>
                 </div>
 
-                <input  type="number" className="half-input-right w-1/2" value={ytValue} readOnly></input>
+                <input  type="number" className="half-input-right w-1/2" value={ytValue} readOnly placeholder='0.00'></input>
               </div>
             </div>
               <div>
@@ -167,12 +167,12 @@ const Converter: React.FC = () => {
                     </div>
                 </div>
 
-                <input  type="number" className="half-input-right w-1/2" value={ptValue} readOnly></input>
+                <input  type="number" className="half-input-right w-1/2" value={ptValue} readOnly placeholder='0.00'></input>
               </div>
             </div>
             </div>
             {userAddress ? (
-              <MintFiva inputValue={ytValue.toString()} />  
+              <MintFiva inputValue={inputValue.toString()} />  
             ) : (
               <button className="button" onClick={() => {/* wallet connection info ? */}}>
                 Please connect wallet
@@ -191,7 +191,7 @@ const Converter: React.FC = () => {
                     className={`flex m-1 justify-center w-full py-2 px-4 cursor-pointer rounded-lg transition duration-200 ease-in-out
                     }`}
                     style={{ backgroundColor: activeTab === Tab.Mint ? '#6161D6' : '' }}
-                    onClick={() => {setActiveTab(Tab.Mint); setInputValue(0)}}
+                    onClick={() => {setActiveTab(Tab.Mint); setInputValue('')}}
                   >
                     Mint
                   </span>
@@ -199,7 +199,7 @@ const Converter: React.FC = () => {
                     className={`flex m-1 justify-center w-full py-2 px-4 cursor-pointer rounded-lg transition duration-200 ease-in-out
                     }`}
                     style={{ backgroundColor: activeTab === Tab.Redeem ? '#6161D6' : '' }}
-                    onClick={() => {setActiveTab(Tab.Redeem); setInputValue(0)}}
+                    onClick={() => {setActiveTab(Tab.Redeem); setInputValue('')}}
                   >
                     Redeem
                   </span>
@@ -223,7 +223,7 @@ const Converter: React.FC = () => {
                     </div>
                 </div>
 
-                <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange}></input>
+                <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange} min="0" placeholder='0'></input>
               </div>
             </div>
             <div>
@@ -243,7 +243,7 @@ const Converter: React.FC = () => {
                     </div>
                 </div>
 
-                <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange}></input>
+                <input  type="number" className="half-input-right w-1/2" value={inputValue} onChange={handleInputChange} min="0" placeholder='0'></input>
               </div>
             </div>
               <div>
@@ -266,7 +266,7 @@ const Converter: React.FC = () => {
                       </div>
                     </div>
                 </div>
-                  <input  type="number" className="half-input-right w-1/2" value={calculateTSton(inputValue)} readOnly ></input>
+                  <input  type="number" className="half-input-right w-1/2" value={calculateTSton(inputValue)} readOnly placeholder='0.00'></input>
                 </div>
               </div>
               <div>
