@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Market.css';
-import ytIcon from '../../assets/icons/ytIcon.svg';
-import ptIcon from '../../assets/icons/ptIcon.svg';
+// import ytIcon from '../../assets/icons/ytIcon.svg';
+// import ptIcon from '../../assets/icons/ptIcon.svg';
 import tsTonIcon from '../../assets/icons/tsTonIcon.svg';
 import { useTonAddress } from '@tonconnect/ui-react';
 import Mint from '../Mint';
@@ -11,8 +11,8 @@ import { useFivaData } from '../../hooks/useFivaData';
 import { useImpliedApy } from '../../hooks/useImpliedAPY';
 import { useTsTonUsdtPrice } from '../../hooks/TVL/useTsTonUsdtPrice';
 import logo from '../../assets/icons/tokenLogo.svg';
-import usePtUsdtPrice from '../../hooks/TVL/usePtUsdtPrice'
-import useYtUsdtPrice from '../../hooks/TVL/useYtUsdtPrice ';
+// import usePtUsdtPrice from '../../hooks/TVL/usePtUsdtPrice';
+// import useYtUsdtPrice from '../../hooks/TVL/useYtUsdtPrice ';
 import useTonstakersApy from '../../hooks/useTonstakersApy ';
 import { calculateDaysToMaturity } from '../../utils/dateCalc';
 
@@ -30,10 +30,10 @@ const Market: React.FC = () => {
   const impliedAPY = results?.impliedApy;
   const formattedImpliedAPY = impliedAPY ? (impliedAPY * 100).toFixed(2) + '%' : '0.00%';
   const { tsTonPrice } = useTsTonUsdtPrice();
-  const ptResults = usePtUsdtPrice();
-  const ptPrice = ptResults.ptPrice;
-  const ytResults = useYtUsdtPrice();
-  const ytPrice = ytResults.ytPrice;
+  // const ptResults = usePtUsdtPrice();
+  // const ptPrice = ptResults.ptPrice;
+  // const ytResults = useYtUsdtPrice();
+  // const ytPrice = ytResults.ytPrice;
 
   const { apy: tonstakersApy, loading: apyLoading, error: apyError } = useTonstakersApy();
 
@@ -84,7 +84,7 @@ const Market: React.FC = () => {
                 <img src={logo} alt="YT Icon" className="subdetail-icon" />
                 <div className="subdetail-info">
                   <span className="subdetail-value">Long Yield APY</span>
-                  <span className="subdetail-subvalue">Price $ {ytPrice?.toFixed(2)}</span>
+                  {/* <span className="subdetail-subvalue">Price $ {ytPrice?.toFixed(2)}</span> */}
                 </div>
                 {/* <span className="subdetail-value">-100%</span> */}
               </div>
@@ -99,7 +99,7 @@ const Market: React.FC = () => {
                 <img src={logo} alt="PT Icon" className="subdetail-icon" />
                 <div className="subdetail-info">
                   <span className="subdetail-value">Fixed APY</span>
-                  <span className="subdetail-subvalue">Price $ {ptPrice?.toFixed(2)}</span>
+                  {/* <span className="subdetail-subvalue">Price $ {ptPrice?.toFixed(2)}</span> */}
                 </div>
                 <span className="subdetail-value">{formattedImpliedAPY}</span>
               </div>

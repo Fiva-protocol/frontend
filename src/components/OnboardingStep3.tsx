@@ -9,7 +9,7 @@ const OnboardingStep3 = ({ nextStep }) => {
     <div className="onboarding">
       <video src={onboardingImage} className="onboarding-image" autoPlay muted loop playsInline />
       <h1>Get Free Test Tokens</h1>
-      <p>Explore all features risk-free. Claim your free test tokens and start your DeFi journey today.</p>
+      <p>As a first step, go to the <strong>Market menu</strong> and click <strong>'Get Test Tokens'</strong> to start exploring yield management with FIVA!</p>
       <div className="progress-indicator">
         <span></span>
         <span></span>
