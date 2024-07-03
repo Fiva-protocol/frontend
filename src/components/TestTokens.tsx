@@ -18,23 +18,19 @@ const TestTokens: React.FC = () => {
   }, [walletAddress]);
 
   return (
-    <div className="test-tokens">
-      <h2>Get Test Tokens</h2>
-      <p>Complete details before submitting.</p>
-      <div className="input-group">
-        <label>Wallet Address</label>
-        <input type="text" value={address} readOnly />
+    <div>
+      <h1>Fiva Test Tokens</h1>
+      <br></br>
+      <div className="text-3">1) Connect your testnet wallet 
+        <br></br>
+        2) Click "Get Test Tokens" button
+        <br></br>
+        <br></br>
+        <div className="text-4">If you need some TON for transactions in Testnet - use @testgiver_ton_bot in Telegram </div>
+
       </div>
-      <div className="input-group">
-        <label>Amount</label>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="0"
-        />
-      </div>
-      <Mint address={address} amount={amount} />
+      <br></br>
+      <Mint />
     </div>
   );
 };
