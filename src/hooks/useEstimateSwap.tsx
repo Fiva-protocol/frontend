@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Address, OpenedContract, toNano } from "@ton/core";
-import { useTonClient } from "../useTonClient";
-import { useAsyncInitialize } from "../useAsyncInitialize";
+import { useTonClient } from "./useTonClient";
+import { useAsyncInitialize } from "./useAsyncInitialize";
 import { Factory, Asset, PoolType } from "@dedust/sdk";
 
 const FACTORY_TESTNET_ADDR = Address.parse("EQDHcPxlCOSN_s-Vlw53bFpibNyKpZHV6xHhxGAAT_21nCFU");

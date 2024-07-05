@@ -6,7 +6,7 @@ import CircleIcon from '../shared/circle-icon/CircleIcon';
 import DoubleInput from '../shared/double-input/DoubleInput';
 import tsTonIcon from '../../assets/icons/tsTonIcon.svg';
 import SegmentedControlButton from '../shared/segmented-control/SegmentedControlButton';
-import { useEstimateSwap } from '../../hooks/blockchain/useEstimateSwap';
+import { useEstimateSwap } from '../../hooks/useEstimateSwap';
 import { Address, fromNano } from '@ton/core';
 import { useJettonBalance } from '../../hooks/useJettonBalance';
 import { useTonAddress } from '@tonconnect/ui-react';

@@ -6,8 +6,12 @@ This directory is a temporary one, normally /admin page from https://github.com/
 # Setup
 
 -   `yarn`
+or
+-   `npm install`
 
 ## Start app
 
 -   `yarn run dev`
+or
+-   `npm run dev`
 # react_v2

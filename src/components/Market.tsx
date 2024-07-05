@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Market.css';
 import tsTonIcon from '../assets/icons/tsTonIcon.svg';
